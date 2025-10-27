@@ -1,37 +1,73 @@
 <!DOCTYPE html>
 <html lang="pt-PT">
   <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-      rel="stylesheet"
-    />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../css/dashboard.css" />
     <title>Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"rel="stylesheet"/>
+    <link rel="stylesheet" href="../css/dashboard.css" />
   </head>
+
   <body>
     <header>
       <div class="banner">
-        <img src="../img/BannerInforSenhas.png" />
+        <img src="../img/BannerInforSenhas.png" alt="Banner Infor Senhas" />
       </div>
-      <nav>
-        <div class="nav">
-          <div class="logo">
-            <img src="../img/LogoInforSenhas.png" />
-          </div>
-          <div class="profile">
-            <img src="../img/FotoPerfilPedro.png" />
-            <p>Pedro Henrique de Oliveira Silva</p>
-            <button>Sair</button>
-          </div>
+
+      <nav class="nav">
+        <div class="logo">
+          <img src="../img/LogoInforSenhas.png" alt="Logo Infor Senhas" />
+        </div>
+
+        <div class="profile">
+          <img src="../img/FotoPerfilPedro.png" alt="Foto de perfil" />
+          <p>Pedro Henrique de Oliveira Silva</p>
+          <button>Sair</button>
         </div>
       </nav>
-      <div>
-        <img src="" alt="" />
-      </div>
     </header>
+
+    <main class="container">
+      <h1 class="nome-estudante">Olá, Pedro Silva!</h1>
+
+      <section class="senhas">
+        <div class="box">
+          <div class="quantidade">
+            <h2>5</h2>
+            <p>Senhas disponíveis</p>
+          </div>
+          <div class="botoes">
+            <button class="comprar-senhas">Comprar senhas</button>
+            <button class="ver-historico">Ver histórico de pagamentos</button>
+          </div>
+        </div>
+        <div class="qrcode">
+          <img src="../img/QRcode.png" alt="QR Code" />
+          <div class="btn-cardapio">
+            <a href="">Ver Cardápio</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer">
+        <img class="logo" src="../img/LogoInforSenhas-White.png" alt="InforSenhas">
+        <div class="texto">
+          <p>Nome de utilizador: <span>Pedro Silva </span><a href="">(Sair)</a></p>
+          <p>Politica de Proteção de Ddados IPS</p>
+        </div>
+        <div class="social">
+          <a href=""><img src="../img/iconFaceBook.png" alt="Facebook"></a>
+          <a href=""><img src="../img/iconInsta.png" alt="Instagram"></a>
+          <a href=""><img src="../img/iconLinkedin.png" alt="LinkedIn"></a>
+          <a href=""><img src="../img/iconYT.png" alt="Youtube"></a>
+          <a href=""><img src="../img/iconTW.png" alt="Twitter"></a>
+          <a href=""><img src="../img/iconSpotify.png" alt="Spotify"></a>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
