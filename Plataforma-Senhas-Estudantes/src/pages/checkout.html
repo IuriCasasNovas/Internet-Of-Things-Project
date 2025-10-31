@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../css/checkout.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Comprar Senhas - Senhas de almoço</title>
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <img src="../img/LogoInforSenhas.png" height="110" width="300" alt="Logo IPS">
+    </div>
+    <div class="user-actions">
+      <span>Pedro Silva</span>
+      <button id="btnSair">Sair</button>
+    </div>
+  </header>
+
+  <h1>Comprar Senhas de Almoço</h1>
+
+  <!-- Formulário de compra -->
+  <div class="card">
+    <h2>Selecionar Quantidade</h2>
+    <form id="compraForm">
+      <div class="form-group">
+        <label for="quantidade">Quantidade de senhas:</label>
+        <select id="quantidade" name="quantidade" required>
+          <option value="">Selecione...</option>
+          <option value="1">1 senha - €2,70</option>
+          <option value="5">5 senhas - €13,50</option>
+          <option value="10">10 senhas - €27,00</option>
+          <option value="20">20 senhas - €54,00</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="metodoPagamento">Método de pagamento:</label>
+        <select id="metodoPagamento" name="metodoPagamento" required>
+          <option value="">Selecione...</option>
+          <option value="mbway">MB Way</option>
+          <option value="paypal">PayPal</option>
+          <option value="cartao">Cartão de Crédito</option>
+        </select>
+      </div>
+
+      <div class="total">
+        <h3>Total: <span id="total">€0,00</span></h3>
+      </div>
+
+      <div class="button-group">
+        <button type="button" class="btn-voltar" onclick="voltarDashboard()">Voltar</button>
+        <button type="submit" class="btn-confirmar">Confirmar Compra</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Informações de pagamento -->
+  <div class="card">
+    <h2>Informações de Pagamento</h2>
+    <div class="info-box">
+      <p><strong>Preço por senha:</strong> €2,70</p>
+      <p><strong>Desconto:</strong> 10% na compra de 10 ou mais senhas</p>
+      <p><strong>Validade:</strong> Senhas válidas por 1 ano</p>
+    </div>
+  </div>
+
+  <script src="Script/dashboard.js"></script>
+</body>
+</html>
