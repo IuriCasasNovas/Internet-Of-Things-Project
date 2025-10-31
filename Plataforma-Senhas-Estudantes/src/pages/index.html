@@ -1,53 +1,42 @@
 <!DOCTYPE html>
-<html lang="PT-pt">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="/src/css/login.css" media="screen" />
-    <title>Plataforma de Senhas</title>
-  </head>
-  <body>
-    <div class="main-bg">
-      
-      <div class="header">
-        <a href="#"><img src="src/img/image.png" alt="logo do instituto" /></a>
-      </div>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/index.css">
+    <title>InforSenhas</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <img src="../img/LogoInforSenhas.png" alt="">
 
-      <div class="main-card">
-        <div class="card-left">
-          <div class="welcome">
-            <h2>Bem-Vindo</h2>
-          </div>
-
-           <!-- Formulario de login -->
-          <form class="login-form">
-            <div class="input-group">
-              <input
-                type="email"
-                id="email"
-                placeholder="E-mail do aluno"
-                required
-              />
-              <img src="/src/img/icon.png" alt="" />
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
-            <div class="input-group">
-              <input
-                type="password"
-                id="password"
-                placeholder="Senha"
-                required
-              />
-              <img src="/src/img/pass-hide-eye.png" alt="" />
-            </div>
-            <button type="submit" class="login-btn">Entrar &rarr;</button>
-          </form>
-          <!-- ------------------- -->
 
-        </div>
-        <div class="card-right">
-          <img src="/src/img/alunos.png" alt="Alunos" />
-        </div>
-      </div>
-    </div>
-  </body>
+            <ul class="menu" id="menu">
+                <li>Home</li>
+                <li>Sobre nois</li>
+                <li>Contato</li>
+                <div class="btn-signin">
+                    <a href="">Iniciar sessão</a>
+                </div>
+            </ul>    
+        </nav>
+
+        <div class="hero-section">
+                <h1 class="text">GARANTA JÁ A TUA SENHA!</h1>
+                <div class="btn-comecar">
+                    <a href="">Comece agora!</a>
+                </div>
+            </div>
+    </header>
+</body>
+<script src="../js/index.js"></script>
 </html>

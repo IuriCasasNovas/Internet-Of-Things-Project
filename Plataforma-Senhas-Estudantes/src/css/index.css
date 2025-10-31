@@ -1,0 +1,113 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: "Segoe UI", sans-serif;
+}
+
+/* Header */
+header{
+    background-image: url(../img/index/campusTEC.png);
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    padding: 10px 20px;
+    width: 100%;
+    height: 70vh;
+}
+
+/* Nav */
+nav{
+    background-color: white;
+    border-radius: 100px;
+    /* margin: 10px 20px; */
+    padding: 10px 40px;
+    align-items: center;
+    border: 1px solid green;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+nav img{
+    width: 15%;
+}
+nav ul.menu{
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    text-decoration: none;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+}
+.menu .btn-signin{
+    margin: 0 0 0 20px;
+    padding: 5px 15px;
+    border-radius: 30px;
+    background-color: #009697;
+}
+.menu .btn-signin a{
+    text-decoration: none;
+    color: white;
+}
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 25px;
+    height: 20px;
+    cursor: pointer;
+}
+.menu-toggle span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: #008b8b;
+    border-radius: 5px;
+}
+
+/* Hero section */
+.hero-section{
+    border: 1px solid red;
+    margin:  40vh 0 0 0;
+}
+.hero-section h1{
+    font-size: 2rem;
+    color: white;
+    font-family: "Archivo Black", sans-serif;
+    text-shadow: 1px 0px 2px #009697;
+}
+.hero-section .text{
+    font-size: 2em;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex;
+    }
+    nav ul.menu {
+        display: none;
+        position: absolute;
+        top: 70px;
+        right: 5%;
+        background: white;
+        border-radius: 15px;
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    
+    nav ul.menu.active {
+        display: flex;
+    }
+}
+
+@media (max-width: 544px){
+
+}
