@@ -1,0 +1,185 @@
+/* --- Estilos Gerais --- */
+body {
+  background-color: #ffffff;
+  color: #1f2937; /* gray-900 */
+  font-family: 'Inter', sans-serif;
+  padding: 0 4rem;
+  margin: 0;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-weight: 600;
+}
+
+.user-actions {
+  margin-top: 2.5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.user-actions span {
+  margin-top: 0.625rem;
+  font-size: 0.875rem;
+  color: #008080;
+  font-weight: 500;
+}
+
+#btnSair {
+  background-color: #1abc9c;
+  color: white;
+  border: none;
+  height: 2.5rem;
+  padding: 0 1rem;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+#btnSair:hover {
+  background-color: #009688;
+}
+
+/* --- Títulos --- */
+h1 {
+  font-size: 1.875rem;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+  color: #008080;
+}
+
+h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #008080;
+}
+
+h3 {
+  font-size: 1.875rem;
+  color: #008080;
+  margin: 0;
+  font-weight: 700;
+}
+
+.card {
+  border: 1px solid #1abc9c;
+  border-radius: 0.75rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 1.125rem;
+}
+
+select {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #d1d5db;
+  border-radius: 0.75rem;
+  background-color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+select:hover {
+  border-color: #1abc9c;
+}
+
+select:focus {
+  outline: none;
+  border-color: #1abc9c;
+  box-shadow: 0 0 0 4px rgba(26, 188, 156, 0.2);
+}
+
+.total {
+  background: linear-gradient(to right, #f0fdfa, #ccfbf1);
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  margin: 1.5rem 0;
+  text-align: center;
+  border: 2px solid #1abc9c;
+}
+
+.total span {
+  font-size: 2.25rem;
+}
+
+/* --- Botões --- */
+.button-group {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-voltar,
+.btn-confirmar {
+  border: none;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-voltar {
+  background-color: #6b7280; /* gray-500 */
+}
+
+.btn-voltar:hover {
+  background-color: #4b5563; /* gray-600 */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transform: translateY(-4px);
+}
+
+.btn-confirmar {
+  background-color: #009688;
+}
+
+.btn-confirmar:hover {
+  background-color: #008080;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transform: translateY(-4px);
+}
+
+/* --- Info Box --- */
+.info-box {
+  background: linear-gradient(to right, #f9fafb, #f3f4f6);
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  border: 2px solid #e5e7eb;
+}
+
+.info-box p {
+  margin-bottom: 0.75rem;
+  color: #374151;
+  font-size: 1.125rem;
+}
+
+.info-box strong {
+  color: #008080;
+}
