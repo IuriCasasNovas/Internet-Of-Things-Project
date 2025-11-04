@@ -122,7 +122,7 @@
                     <img src="../img/index/ftPerfil-teste.jpg" alt="Iuri Novas">
                 </div>
                 <div class="nome">Iuri Novas</div>
-                <div class="cargo">Programador Front-End e Técnico de Integração de Sensores</div>
+                <div class="cargo">Programador e Técnico de Integração de Sensores</div>
                 <div class="social">
                     <a href=""><img src="../img/index/github.png" alt="GitHub"></a>
                     <a href=""><img src="../img/index/linkedin.png" alt="LinkedIn"></a>
@@ -194,5 +194,13 @@
     </footer>
 
 </body>
-<script src="../js/index.js"></script>
+<script>
+    // Script para abrir e fechar o menu
+    const menuToggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu');
+
+    menuToggle.addEventListener('click', () => {
+    menu.classList.toggle('active');
+    });
+</script>
 </html>
