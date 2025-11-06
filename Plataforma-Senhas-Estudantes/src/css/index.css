@@ -4,8 +4,21 @@
     box-sizing: border-box;
 }
 
+html{
+    scroll-behavior: smooth;
+}
+
 body{
     font-family: "Segoe UI", sans-serif;
+}
+
+/* Subtitle todos */
+.subtitle{
+    text-align: center;
+    font-weight: 400;
+    font-size: 1.5em;
+    color: #008b8b;
+    margin: 0 0 50px 0;
 }
 
 /* Header */
@@ -24,15 +37,15 @@ nav{
     background-color: white;
     border-radius: 100px;
     /* margin: 10px 20px; */
-    padding: 10px 40px;
+    padding: 5px 40px;
     align-items: center;
-    border: 1px solid green;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 nav img{
-    width: 15%;
+    padding: 10px 0;
+    width: 12%;
 }
 nav ul.menu{
     align-items: center;
@@ -44,11 +57,21 @@ nav ul.menu{
     display: flex;
     flex-direction: row;
 }
+nav ul li a{
+    text-decoration: none;
+    color: #22BDB6;
+    font-weight: 400;
+}
+
 .menu .btn-signin{
+    justify-content: center;
+    display: flex;
+    text-align: center;
+    align-items: center;
     margin: 0 0 0 20px;
-    padding: 5px 15px;
+    padding: 10px 20px;
     border-radius: 30px;
-    background-color: #009697;
+    background-color: #22BDB6;
 }
 .menu .btn-signin a{
     text-decoration: none;
@@ -72,8 +95,7 @@ nav ul.menu{
 
 /* Hero section */
 .hero-section{
-    border: 1px solid red;
-    margin:  40vh 0 0 0;
+    margin:  35vh 0 0 0;
 }
 .hero-section h1{
     font-size: 2rem;
@@ -81,8 +103,271 @@ nav ul.menu{
     font-family: "Archivo Black", sans-serif;
     text-shadow: 1px 0px 2px #009697;
 }
-.hero-section .text{
+.hero-section .text {
+  font-size: clamp(1.2rem, 8vw, 3rem);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  max-width: 100%;       
+}
+.hero-section .btn-comecar{
+    justify-content: center;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    width: clamp(120px, 15vw, 190px);
+    padding: clamp(6px, 0.5vw, 25px) clamp(14px, 0.5vw, 24px);
+    border-radius: 30px;
+    background-color: #22BDB6;
+}
+.hero-section .btn-comecar a{
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    text-decoration: none;
+    color: white;
+}
+
+/* Section sobre nos */
+.title-sobre-nos{
+    color: #009697;
+    font-weight: 400;
     font-size: 2em;
+    margin: 50px 0 20px 100px;
+}
+.sobre-nos{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.sobre-nos p{
+    display: flex;
+    justify-content: center;
+    width: 70%;
+    font-size: 1em;
+    font-weight: 400;
+    text-align: center;
+}
+/* Simplicidade */
+.simplicidade {
+    width: 100%;
+    margin: 80px 0 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.simplicidade .cards {
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+.simplicidade .cards .card {
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding: 40px 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    background-color: #EDF2F5;
+    border: 1px solid #22BDB6;
+    width: 20%;
+    min-width: 200px; 
+}
+
+/* Section Passos */
+.passos {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 80px 0;
+}
+.passos .cards {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 40px; 
+}
+.passos .card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    border: 1px solid #00a0a0;
+    border-radius: 10px;
+    width: clamp(300px, 30vw, 400px);
+    height: clamp(20px, 5vw, 300px);
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    font-size: 1.2rem;
+}
+.passos .card.first {
+    margin-left: -10vw;
+}
+.passos .card.second {
+    margin-left: 5vw;
+}
+.passos .card.third {
+    margin-left: 20vw;
+}
+.passos .numero {
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #00a0a0;
+    color: white;
+    font-weight: 400;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Section feedback */
+.feedback {
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 80px 0;
+}
+.feedback .cards {
+    align-items: center;
+    justify-content: space-evenly;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+.feedback .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px 20px;
+    width: clamp(300px, 30vw, 400px);
+    height: clamp(130px, 5vw, 300px);
+    background-color: #EDF2F5;
+    border: 1px solid #22BDB6;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+.feedback .card p {
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+}
+
+/* section equipe */
+.equipe{
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 80px 0;
+}
+.equipe .cards{
+    gap: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.equipe .card {
+    border: 1px solid #22BDB6;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 20px 20px;
+    width: clamp(300px, 20vw, 400px);
+    background-color: #EDF2F5;
+}
+.equipe .foto-perfil{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.equipe .foto-perfil img{
+    border: 3px solid #008b8b;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+.equipe .nome{
+    font-size: 2em;
+    color: #22BDB6;
+    text-align: center;
+}
+.equipe .cargo{
+    font-size: 1em;
+    color: #000000;
+    text-align: center;
+}
+.equipe .social{
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+}
+.equipe .social img{
+    width: 80%;
+    height: 80%;
+}
+
+/* CTA */
+.cta{
+    margin: 170px 0 80px 0;
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.cta .cta-text{
+    text-align: center;
+    font-style: italic;
+    font-weight: 400;
+}
+.cta a{
+    background-color: #22BDB6;
+    padding: 10px 20px;
+    border-radius: 30px;
+    text-decoration: none;
+    color: white;
+}
+
+/* Footer */
+footer{
+    width: 100%;
+}
+.footer {
+    background-color: #009b9e;
+    padding: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.footer .logo{
+    width: 200px;
+    height: 60px;
+}
+.footer .texto{
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+.footer .texto a{
+    text-decoration: none;
+    color: white;
+}
+.footer .social img{
+    width: 50px;
+    height: 50px
 }
 
 /* Responsividade */
@@ -90,6 +375,7 @@ nav ul.menu{
     .menu-toggle {
         display: flex;
     }
+
     nav ul.menu {
         display: none;
         position: absolute;
@@ -102,12 +388,88 @@ nav ul.menu{
         padding: 15px;
         box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
-    
+
     nav ul.menu.active {
         display: flex;
     }
+
+    .passos .cards {
+        gap: 25px;
+    }
+
+    .passos .card {
+        font-size: 1rem;
+        padding: 15px 25px;
+    }
+
+    .passos .numero {
+        width: 30px;
+        height: 30px;
+        font-size: 0.9rem;
+        left: -15px;
+    }
+
+    .simplicidade .cards .card {
+        width: 80%;
+    }
 }
 
-@media (max-width: 544px){
+@media (max-width: 790px) {
+    .hero-section .text{
+        display: none;
+    }
+    .hero-section .btn-comecar{
+        display: none;
+    }
+}
 
+@media (max-width: 900px) {
+    .feedback .cards {
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .feedback .card {
+        width: 80%;
+        height: auto;
+    }
+
+    .passos .card.first,
+    .passos .card.second,
+    .passos .card.third {
+        margin-left: 0;
+        align-self: center;
+    }
+
+    .passos .cards {
+        align-items: center;
+    }
+
+    .footer {
+        align-items: center;
+
+        gap: 50px;
+        background-color: #009b9e;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+}
+
+@media (max-width: 1000px) {
+    .simplicidade .cards{
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .simplicidade .cards .card {
+        width: 40%; /* 2 por linha */
+    }
 }
