@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Painel de Administrador</title>
+    <link rel="stylesheet" href="../css/dashboard.css" />
+  </head>
+  <body>
+    <header>
+      <div class="banner">
+        <img src="../img/BannerInforSenhas.jpg" alt="Banner Infor Senhas" />
+      </div>
+      <nav class="nav">
+        <div class="logo">
+          <img src="../img/LogoInforSenhas.png" alt="Logo Infor Senhas" />
+        </div>
+        <div class="profile">
+          <p>Administrador</p>
+          <button id="logout">Sair</button>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container">
+      <h1>Painel de Administração</h1>
+      <p>Bem-vindo ao painel do Administrador. Aqui poderá gerir utilizadores e configurações.</p>
+      <!-- TODO: adicionar funcionalidades de administração -->
+    </main>
+
+    <script>
+      document.getElementById('logout').addEventListener('click', () => {
+        localStorage.removeItem('user');
+        localStorage.removeItem('role');
+        window.location.href = '/pages/login.html';
+      });
+    </script>
+  </body>
+</html>

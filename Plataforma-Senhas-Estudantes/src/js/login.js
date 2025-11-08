@@ -23,6 +23,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await response.json();
 
         if (response.ok) {
+          try {
+            if (data.user) localStorage.setItem('user', JSON.stringify(data.user));
+            if (data.role) localStorage.setItem('role', data.role);
+          } catch (e) {
+            console.warn('Não foi possível guardar dados do utilizador no localStorage:', e);
+          }
           window.location.href = data.redirectTo;
         } else {
           errorMessage.textContent = data.message;
