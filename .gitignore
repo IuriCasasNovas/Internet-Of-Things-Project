@@ -1,0 +1,8 @@
+# Ignorar ficheiros do Node
+node_modules/
+
+# Ignorar dados de utilizador (FOTOS)
+Plataforma-Senhas-Estudantes/src/uploads/
+
+# (Opcional: ficheiros de sistema)
+.DS_Store
