@@ -1,0 +1,185 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: #22BDB6;
+    font-family: "Segoe UI", sans-serif;    
+}
+html{
+    scroll-behavior: smooth;
+}
+
+/* Header */
+header{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+/* Side menu */
+.side-menu{
+    height: 100vh;
+    width: 30%;
+    max-width: 300px;
+    background-color: white;
+    box-shadow: 10px 0 15px rgba(0,0,0,0.1);
+    border-radius: 0 20px 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.side-menu .logo img{
+    width: 80%;
+    padding:30px 0 0 20px;
+}
+.side-menu .links a{
+    text-decoration: none;
+    color: black;
+}
+.side-menu .links{
+    width: 100%;
+    margin: 50px 0 0 0 ;
+    display: flex;
+    flex-direction: column;
+}
+.side-menu .gerir-aluno{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px;
+}
+.side-menu .gerir-aluno img{
+    margin: 0 10px 0 0;
+    width: 30px;
+    height: 30px;
+}
+.side-menu .gerar-relatorio{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px;
+}
+.side-menu .gerar-relatorio img{
+    margin: 0 10px 0 0;
+    width: 30px;
+    height: 30px;
+}
+.side-menu .gerir-aluno:hover{
+    background-color: rgba(34, 189, 182, 0.31);
+}
+.side-menu .gerar-relatorio:hover{
+    background-color: rgba(34, 189, 182, 0.31);
+}
+
+/* Content Area dentro do Header */
+.content-area {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+/* Navbar */
+.navbar{
+    margin-right: 0;
+    height: 20vh;
+    padding: 30px 20px 0 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.navbar .search-box{
+    height: 40px;
+    padding: 5px 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: white;
+    border-radius: 20px;
+}
+.navbar .search-box input{
+    align-items: center;
+    padding: 0 15px;
+}
+.navbar .search-box input{
+    width: 200px;
+    border: none;
+    font-size: 16px;
+    outline: none;
+}
+.navbar .search-box img{
+    width: 25px;
+    height: 25px;
+}
+.navbar .info-pessoal{
+    width: 35%;
+    height: 30%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.navbar .info-pessoal img{
+    width: 13%;
+}
+.navbar .info-pessoal button{
+    font-weight: 500;
+    font-size: 1em;
+    width: 10vh;
+    height: 5vh;
+    border: none;
+    border-radius: 30px;
+    background-color: white;
+    color: #22BDB6;
+}
+
+/* Relatorio Financeiro */
+.relatorio{
+    height: 80vh;
+    padding: 30px 40px;
+    color: white;
+    position: relative;
+}
+
+.relatorio h1 {
+    margin-bottom: 20px;
+	font-size: 2em;
+	/* margin-bottom: 0px; */
+	font-weight: 600;
+}
+
+
+/* Botão gerar relatorio */
+.btn-gerar-relatorio {
+	background-color: #0c9c95;
+	color: white;
+	border: none;
+	border-radius: 10px;
+	padding: 15px 30px;
+	font-size: 18px;
+	position: absolute;
+	right: 40px;
+	top: 30px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.gerar-relatorio:hover {
+	background-color: #14b0a8;
+}
+
+.relatorio .img-box{
+    margin: 80px 0 0 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.relatorio img{
+    align-items: center;
+    width: 100%;
+}
+

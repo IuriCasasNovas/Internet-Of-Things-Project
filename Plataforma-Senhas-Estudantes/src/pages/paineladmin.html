@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/paineladmin.css">
+    <title>Painel de Admin</title>
+</head>
+<body>  
+    <header>
+        <div class="side-menu">
+            <div class="logo">
+                <img src="../img/LogoInforSenhas.png" alt="Infor Senhas">
+            </div>
+            <div class="links">
+                <a href="" class="gerir-aluno active"><img src="../img/gerirAluno.png" alt="">Gestão de Alunos</a>
+                <a href="" class="gerar-relatorio"><img src="../img/relaFinanceiro.png" alt="">Relatórios Financeiro</a>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <nav class="navbar">
+                <div class="search-box">
+                    <img src="../img/Lupa.png" alt="">
+                    <input type="text" placeholder="Pesquisar Aluno">
+                </div>
+                <div class="info-pessoal">
+                    <img src="../img/FotoPerfilPedro.png" alt="Foto de perfil">
+                    <p>Pedro Henrique de Oliveira Silva</p>
+                    <button>Sair</button>
+                </div>
+            </nav>
+
+            <section class="gestao-alunos">
+                <h1>Gestão de Alunos</h1>
+                <button class="adicionar-senha">Adicionar Senha</button>
+
+                <div class="tabela-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Numero de aluno</th>
+                                <th>Tipo</th>
+                                <th>Estado</th>
+                                <th>Senhas</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Pedro Silva</td>
+                                <td>2025000000</td>
+                                <td>Aluno</td>
+                                <td class="estado"><div class="ativo"></div>Ativo</td>
+                                <td>5</td>
+                                <td class="acoes">
+                                    <button>Editar</button>
+                                    <button>Bloquear</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Iuri Novas</td>
+                                <td>2025000000</td>
+                                <td>Aluno</td>
+                                <td class="estado"><div class="ativo"></div>Ativo</td>
+                                <td>5</td>
+                                <td class="acoes">
+                                    <button>Editar</button>
+                                    <button>Bloquear</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tiago Duarte</td>
+                                <td>2025000000</td>
+                                <td>Aluno</td>
+                                <td class="estado"><div class="ativo"></div>Ativo</td>
+                                <td>5</td>
+                                <td class="acoes">
+                                    <button>Editar</button>
+                                    <button>Bloquear</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Riley Chilembo</td>
+                                <td>2025000000</td>
+                                <td>Aluno</td>
+                                <td class="estado"><div class="inativo"></div>Inativo</td>
+                                <td>5</td>
+                                <td class="acoes">
+                                    <button>Editar</button>
+                                    <button>Desbloquear</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Luis Nunes</td>
+                                <td>2025000000</td>
+                                <td>Aluno</td>
+                                <td class="estado"><div class="ativo"></div>Ativo</td>
+                                <td>5</td>
+                                <td class="acoes">
+                                    <button>Editar</button>
+                                    <button>Bloquear</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="paginacao">
+                    <button>&laquo;</button>
+                    <span>1</span>
+                    <button>&raquo;</button>
+                </div>
+            </section>
+        </div>
+    </header>
+</body>
+</html>
