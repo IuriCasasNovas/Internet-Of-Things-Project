@@ -1,8 +1,11 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
+const fsp = require('fs/promises');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const db = require('./Plataforma-Senhas-Estudantes/src/js/BD.js');
+const multer = require('multer');
 
 const app = express();
 const PORT = 3000;
@@ -16,13 +19,42 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     secure: false, 
-    httpOnly: true, 
-    maxAge: 1000 * 60 * 60 * 2 
+    httpOnly: true
   }
 }));
 
 const staticPath = path.join(__dirname, 'Plataforma-Senhas-Estudantes/src');
 app.use(express.static(staticPath));
+app.use('/uploads', express.static(path.join(staticPath, 'uploads')));
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(staticPath, 'uploads/profiles'));
+  },
+  filename: (req, file, cb) => {
+    const userId = req.session.user.id;
+    const extension = path.extname(file.originalname);
+    const uniqueSuffix = Date.now(); 
+    cb(null, `user-${userId}-${uniqueSuffix}${extension}`);
+  }
+});
+
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image/')) {
+    cb(null, true);
+  } else {
+    cb(new Error('Apenas ficheiros de imagem são permitidos!'), false);
+  }
+};
+
+const upload = multer({ storage: storage, fileFilter: fileFilter });
+
+try {
+  const profilesDir = path.join(staticPath, 'uploads', 'profiles');
+  fs.mkdirSync(profilesDir, { recursive: true });
+} catch (err) {
+  console.error('Erro ao criar diretórios de upload:', err);
+}
 
 async function isValidPassword(plainPassword, dbPassword) {
     const looksHashed = typeof dbPassword === 'string' && /^\$2[aby]\$/.test(dbPassword);
@@ -41,6 +73,67 @@ const isAuthenticated = (req, res, next) => {
     res.status(401).json({ message: 'Não autorizado. Por favor, faça login.' });
   }
 };
+
+async function deletePreviousPic(filePath, baseStaticPath) {
+  if (!filePath) return;
+
+  try {
+    const normalizedPath = filePath.replace(/^\//, ''); 
+    const fullPath = path.resolve(baseStaticPath, normalizedPath);
+    const profilesDir = path.resolve(baseStaticPath, 'uploads', 'profiles');
+
+    if (fullPath.startsWith(profilesDir)) {
+      await fsp.unlink(fullPath); 
+      console.log('Foto de perfil antiga removida:', fullPath);
+    } else {
+      console.warn('Caminho da foto anterior fora do diretório permitido, não será apagado:', fullPath);
+    }
+  } catch (err) {
+    if (err.code !== 'ENOENT') { 
+      console.warn('Erro ao apagar foto antiga:', err);
+    }
+  }
+}
+
+
+app.post('/api/profile/picture', isAuthenticated, upload.single('profilePic'), async (req, res) => {
+  
+
+  if (!req.file) {
+    return res.status(400).json({ message: 'Nenhum ficheiro enviado.' });
+  }
+
+  const newFilePath = `/uploads/profiles/${req.file.filename}`;
+  const userId = req.session.user.id;
+  let oldFilePath = null;
+
+  try {
+    const [rows] = await db.execute('SELECT Foto FROM Pessoa WHERE Id_Pessoa = ?', [userId]);
+    if (rows.length > 0 && rows[0].Foto) {
+      oldFilePath = rows[0].Foto;
+    }
+
+    const query = 'UPDATE Pessoa SET Foto = ? WHERE Id_Pessoa = ?';
+    await db.execute(query, [newFilePath, userId]);
+
+    req.session.user.foto = newFilePath;
+
+    deletePreviousPic(oldFilePath, staticPath);
+
+    console.log(`Utilizador ${userId} atualizou a foto de perfil. Novo caminho: ${newFilePath}`);
+    res.status(200).json({ 
+      message: 'Foto de perfil atualizada!',
+      newPath: newFilePath 
+    });
+
+  } catch (error) {
+    console.error('Erro no upload da foto (BD):', error);
+    
+    deletePreviousPic(newFilePath, staticPath); 
+
+    res.status(500).json({ message: 'Erro interno ao guardar a foto.' });
+  }
+});
 
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
@@ -113,11 +206,8 @@ app.get('/api/senhas/disponiveis', isAuthenticated, async (req, res) => {
   
   try {
     const pessoaId = req.session.user.id;
-
     const query = "SELECT COUNT(s.Id_Senha) AS quantidade FROM Senha AS s JOIN Estado AS e ON s.Estado = e.Id_Estado JOIN Compra AS c ON s.Compra = c.Id_Compra JOIN Aluno AS a ON c.Aluno = a.Id_Aluno WHERE a.Pessoa = ? AND e.Estado = 'Ativo'";
-
     const [results] = await db.execute(query, [pessoaId]);
-    
     res.status(200).json(results[0]); 
 
   } catch (error) {
@@ -127,5 +217,5 @@ app.get('/api/senhas/disponiveis', isAuthenticated, async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Servidor a correr em http://localhost:${PORT}/pages/login.html`);
+  console.log(`>>> Servidor a correr em http://localhost:${PORT}/pages/login.html`);
 });
