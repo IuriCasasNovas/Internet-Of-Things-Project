@@ -30,7 +30,7 @@ function updateUI(user) {
 
 async function loadSenhasDisponiveis() {
   try {
-    const response = await fetch('/api/senhas/disponiveis');
+    const response = await fetch('../api/senhas.php');
     if (!response.ok) {
       console.error('Não foi possível carregar a quantidade de senhas.');
       return;
@@ -49,7 +49,7 @@ async function loadSenhasDisponiveis() {
 
 async function handleLogout() {
   try {
-    const response = await fetch('/logout', { method: 'POST' });
+    const response = await fetch('../api/logout.php', { method: 'POST' });
     const data = await response.json();
     
     if (response.ok) {
@@ -66,7 +66,7 @@ async function uploadProfilePic(file) {
   formData.append('profilePic', file); 
 
     try {
-      const response = await fetch('/api/profile/picture', {
+      const response = await fetch('../api/upload.php', {
         method: 'POST',
         body: formData,
     });
@@ -152,7 +152,7 @@ function attachEventListeners() {
 
 async function initDashboard() {
   try {
-    const response = await fetch('/api/me'); 
+    const response = await fetch('../api/me.php'); 
     if (!response.ok) {
       window.location.href = '/pages/login.html';
       return; 
