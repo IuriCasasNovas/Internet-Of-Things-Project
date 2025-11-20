@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="../css/checkout.css">
+</head>
+<body>
+    <header>
+        <img src="../img/LogoInforSenhas-White.png" alt="InforSenhas">
+        <div class="btn-voltar">
+            <a href="../pages/dashboard.html">Voltar</a>
+        </div>
+    </header>
+
+    <main>
+        <h1>Checkout</h1>
+        <div class="container">
+            <div class="content">
+                <div class="methods">
+                    <h3>Selecione método de pagamento:</h3>
+
+                    <div class="method MBW" onclick="selectMethod('mbway')">
+                        <img src="../img/imgMBway.png" alt="MB WAY">
+                        <p>MBWay</p>
+                    </div>
+
+                    <div class="method MB" onclick="selectMethod('multibanco')">
+                        <img src="../img/imgMultibanco.png" alt="Multibanco">
+                        <p>MULTIBANCO</p>
+                    </div>
+                </div>
+
+                <div class="details" id="detailsBox"> 
+                    <!-- JS insere -->
+                </div>
+
+                <div class="btn-box">
+                    <button class="pay-btn">Pagar</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+<script src="../js/checkout.js"></script>
+</body>
+</html>
