@@ -22,20 +22,20 @@
         </div>
 
         <div class="profile">
-          <img src="../img/FotoPerfilPedro.png" alt="Foto de perfil" />
-          <p>Pedro Henrique de Oliveira Silva</p>
-          <button>Sair</button>
+          <img id="profile-pic" src="../img/FotoPerfilPedro.png" alt="Foto de perfil" />
+          <p id="profile-name">Pedro Henrique de Oliveira Silva</p>
+          <button id="logout-button">Sair</button>
         </div>
       </nav>
     </header>
 
     <main class="container">
-      <h1 class="nome-estudante">Olá, Pedro Silva!</h1>
+      <h1 id="greeting-name" class="nome-estudante">Olá, Pedro Silva!</h1>
 
       <section class="senhas">
         <div class="box">
           <div class="quantidade">
-            <h2>5</h2>
+            <h2 id="senhas-quantidade">5</h2>
             <p>Senhas disponíveis</p>
           </div>
           <div class="botoes">
@@ -56,7 +56,7 @@
       <div class="footer">
         <img class="logo" src="../img/LogoInforSenhas-White.png" alt="InforSenhas">
         <div class="texto">
-          <p>Nome de utilizador: <span>Pedro Silva </span><a href="">(Sair)</a></p>
+          <p>Nome de utilizador: <span id="footer-username">Pedro Silva </span><a href="">(Sair)</a></p>
           <p>Politica de Proteção de Ddados IPS</p>
         </div>
         <div class="social">
@@ -69,5 +69,27 @@
         </div>
       </div>
     </footer>
+    
+    <div id="upload-modal" class="modal-overlay" style="display: none;">
+      <div class="modal-content">
+        <h3>Alterar Foto de Perfil</h3>
+        <p>Escolha uma imagem do seu computador.</p>
+        <input type="file" id="file-input" accept="image/*">
+        <button id="cancel-upload-1" class="btn-cancelar">Cancelar</button>
+      </div>
+    </div>
+
+    <div id="confirm-modal" class="modal-overlay" style="display: none;">
+      <div class="modal-content">
+        <h3>Confirmar nova foto?</h3>
+        <img id="preview-image" src="" alt="Preview da nova foto" style="max-width: 200px; max-height: 200px; margin: 10px auto;">
+        <div>
+          <button id="confirm-upload" class="btn-confirmar">Confirmar</button>
+          <button id="cancel-upload-2" class="btn-cancelar">Escolher Outra</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="../js/dashboard.js" defer></script>
   </body>
 </html>
