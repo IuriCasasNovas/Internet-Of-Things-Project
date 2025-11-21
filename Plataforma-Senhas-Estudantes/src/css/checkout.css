@@ -1,0 +1,297 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", sans-serif;
+    background-color: #22BDB6;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 100px;
+}
+
+header img {
+    width: 20%;
+}
+
+header .btn-voltar {
+    background-color: #009697;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10%;
+    height: 5vh;
+}
+
+.btn-voltar a {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    font-size: 90%;
+}
+
+/* main */
+
+h1 {
+    color: white;
+    text-align: center;
+    font-weight: 700;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.content {
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    display: flex;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    gap: 20px;
+}
+
+/* Methods */
+.methods {
+    /* border: 1px solid #4400ff; */
+    width: 40%;
+    padding-left: 30px;
+}
+
+.methods h3 {
+    font-weight: 500;
+    font-size: 1em;
+    margin-bottom: 20px;
+}
+
+.method {
+    width: 100%;
+    background-color: #EDF2F5;
+    border: 1px solid #22BDB6;
+    border-radius: 5px;
+    height: 15vh;
+    margin-bottom: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: 0.2s ease-in-out;
+}
+
+.method:hover {
+    background-color: #d6fffe;
+    cursor: pointer;
+}
+
+.method img {
+    width: 20%;
+    padding: 10px;
+}
+
+/* Details */
+
+.details {
+    /* border: 1px solid #00ff15; */
+    width: 40%;
+    padding: 20px;
+}
+
+/* mbway*/
+
+.mbway-box {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-row {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.qty-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.qty-box button {
+    width: 30px;
+    height: 22px;
+    background-color: #EDF2F5;
+    border: 1px solid #22BDB6;
+    border-radius: 5px;
+}
+
+.input-row input {
+    padding: 12px;
+    width: 80%;
+    background-color: #EDF2F5;
+    border: 1px solid #22BDB6;
+    border-radius: 5px;
+}
+
+/* multibanco */
+
+.multibanco-box {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-row p {
+    font-size: 1em;
+}
+
+/* pay button */
+.btn-box{
+    /* border: 1px solid red; */
+    align-items: end;
+    justify-content: center;
+    display: flex;
+}
+
+.pay-btn {
+    background-color: #22BDB6;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    color: white;
+    width: 150px;
+    height: 40px;
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+    header {
+        margin: 20px 40px;
+    }
+
+    header img {
+        width: 30%;
+    }
+
+    .content {
+        gap: 20px;
+    }
+
+    .methods {
+        width: 45%;
+        padding-left: 20px;
+    }
+
+    .details {
+        width: 50%;
+    }
+
+    .method img {
+        width: 25%;
+    }
+}
+
+@media (max-width: 768px) {
+
+    header {
+        margin: 15px 20px;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    header img {
+        width: 45%;
+    }
+
+    header .btn-voltar {
+        width: 35%;
+    }
+
+    .content {
+        flex-direction: column;
+        width: 95%;
+        padding: 20px;
+    }
+
+    .methods,
+    .details {
+        width: 100%;
+        padding: 15px 5px;
+    }
+
+    .method {
+        height: 12vh;
+    }
+
+    .method img {
+        width: 22%;
+    }
+    .pay-btn {
+        width: 90%;
+        height: 45px;
+        margin: 20px auto 0;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 576px) {
+
+    h1 {
+        font-size: 1.6em;
+    }
+
+    header img {
+        width: 60%;
+    }
+
+    .method img {
+        width: 28%;
+    }
+
+    .details {
+        font-size: 0.9em;
+    }
+
+    .qty-box button {
+        width: 28px;
+        height: 22px;
+    }
+}
+
+@media (max-width: 420px) {
+
+    header img {
+        width: 70%;
+    }
+
+    .method {
+        height: 10vh;
+    }
+
+    .method img {
+        width: 30%;
+    }
+
+    .pay-btn {
+        width: 100%;
+        height: 45px;
+        font-size: 17px;
+    }
+}
