@@ -242,19 +242,69 @@ footer{
 }
 
 .modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  text-align: center;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    background-color: rgb(255, 255, 255);
+    padding: 40px 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.modal-content .btn-cancelar.primeiro {
+    display: flex;
+    align-items: start;
+    background-color: #009697;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 12px;
+    cursor: pointer;
+    margin: 0 0 20px 0;
+    font-size: 1em;
 }
 
 .modal-content h3 {
-  margin-top: 0;
+    font-size: 20px;
+    font-weight: 500;
+    color: #009697;
+    margin-top: 0;
+    margin: 0 0 20px 0;
+}
+
+.image-upload {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.image-upload label {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background-color: #EDF2F5;
+    border: 3px solid #00b3b3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.image-upload label:hover {
+    opacity: 0.9;
+}
+
+.camera-icon {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+}
+
+#file-input {
+    display: none;
 }
 
 .modal-content .btn-confirmar {
-  background-color: #28a745; /* Verde */
+  background-color: #22BDB6;
   color: white;
   border: none;
   padding: 10px 15px;
@@ -264,9 +314,9 @@ footer{
 }
 
 .modal-content .btn-cancelar {
-  background-color: #dc3545; /* Vermelho */
-  color: white;
-  border: none;
+  background-color: white;
+  color: #22BDB6;
+  border: 2px solid #22BDB6;
   padding: 10px 15px;
   border-radius: 5px;
   cursor: pointer;
