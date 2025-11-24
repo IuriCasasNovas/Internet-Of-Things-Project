@@ -1,9 +1,11 @@
+/* Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Body */
 body {
     background-color: #EDF2F5;
     font-family: "Segoe UI", sans-serif;
@@ -12,7 +14,7 @@ body {
     align-items: center;
 }
 
-/* header */
+/* Header */
 header {
     width: 100%;
     position: relative;
@@ -31,13 +33,12 @@ header .banner img {
     display: block;
 }
 
-/* nav */
+/* Nav */
 nav.nav {
     position: absolute;
-    top: 80px; 
+    top: 80px;
     left: 50%;
     transform: translate(-50%, -50%);
-    
     width: 90%;
     background-color: white;
     border-radius: 50px;
@@ -95,6 +96,7 @@ main.container {
     margin-bottom: 30px;
 }
 
+/* Senhas Section */
 .senhas {
     display: flex;
     align-items: center;
@@ -134,7 +136,7 @@ main.container {
     font-weight: 400;
 }
 
-/* Botões */
+/* Buttons */
 .botoes {
     width: 40%;
     display: flex;
@@ -158,12 +160,10 @@ main.container {
 
 .botoes .comprar-senhas {
     background-color: #009b9e;
-    transition: background-color 0.3s;
 }
 
 .botoes .ver-historico {
     background-color: #22BDB6;
-    transition: background-color 0.3s;
 }
 
 /* QR Code */
@@ -172,14 +172,14 @@ main.container {
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    }
+}
 
 .qrcode img {
     width: 100px;
     height: 100px;
 }
 
-.btn-cardapio{
+.btn-cardapio {
     padding: 5px 15px;
     border-radius: 5px;
     background-color: #009b9e;
@@ -189,13 +189,13 @@ main.container {
     background-color: #00b2b6;
 }
 
-.btn-cardapio a{
+.btn-cardapio a {
     text-decoration: none;
     color: white;
 }
 
 /* Footer */
-footer{
+footer {
     width: 100%;
 }
 
@@ -207,38 +207,39 @@ footer{
     justify-content: space-around;
 }
 
-.footer .logo{
+.footer .logo {
     width: 200px;
     height: 60px;
 }
 
-.footer .texto{
+.footer .texto {
     color: white;
     display: flex;
     flex-direction: column;
 }
 
-.footer .texto a{
+.footer .texto a {
     text-decoration: none;
     color: white;
 }
 
-.footer .social img{
+.footer .social img {
     width: 50px;
-    height: 50px
+    height: 50px;
 }
 
+/* Modals */
 .modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
 .modal-content {
@@ -246,7 +247,7 @@ footer{
     padding: 40px 30px;
     border-radius: 10px;
     text-align: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .modal-content .btn-cancelar.primeiro {
@@ -267,7 +268,7 @@ footer{
     font-weight: 500;
     color: #009697;
     margin-top: 0;
-    margin: 0 0 20px 0;
+    margin-bottom: 20px;
 }
 
 .image-upload {
@@ -304,21 +305,139 @@ footer{
 }
 
 .modal-content .btn-confirmar {
-  background-color: #22BDB6;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 5px;
+    background-color: #22BDB6;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
 }
 
 .modal-content .btn-cancelar {
-  background-color: white;
-  color: #22BDB6;
-  border: 2px solid #22BDB6;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 5px;
+    background-color: white;
+    color: #22BDB6;
+    border: 2px solid #22BDB6;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+/* Responsividade */
+
+/* Tablets */
+@media (max-width: 992px) {
+    .banner {
+        display: none;
+    }
+
+    header {
+        margin-bottom: 100px;
+    }
+
+    nav.nav {
+        height: auto;
+    }
+
+    .nav .logo img {
+        width: 25vw;
+    }
+
+    .profile p {
+        font-size: 1rem;
+    }
+
+    .nome-estudante {
+        font-size: 2.3rem;
+        text-align: center;
+    }
+
+    .senhas {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .box {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .botoes {
+        width: 100%;
+    }
+}
+
+/* Smartphones */
+@media (max-width: 768px) {
+    .profile img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .profile p,
+    .profile button {
+        font-size: 1rem;
+    }
+
+    .senhas {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .box {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .botoes {
+        width: 100%;
+        gap: 15px;
+    }
+
+    .qrcode {
+        margin-top: 20px;
+    }
+
+    .footer {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .footer .social img {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+/* Motos & Small Devices */
+@media (max-width: 480px) {
+    .nome-estudante {
+        font-size: 1.9rem;
+    }
+
+    .quantidade h2 {
+        font-size: 2.8rem;
+    }
+
+    .quantidade p {
+        font-size: 1.1rem;
+    }
+
+    .botoes button {
+        height: 40px;
+        font-size: 0.9rem;
+    }
+
+    .footer .logo {
+        width: 150px;
+        height: auto;
+    }
+
+    .qrcode img {
+        width: 80px;
+        height: 80px;
+    }
 }
