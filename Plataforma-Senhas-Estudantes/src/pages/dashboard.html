@@ -22,7 +22,7 @@
         </div>
 
         <div class="profile">
-          <img id="profile-pic" src="../img/FotoPerfilPedro.png" alt="Foto de perfil" />
+          <img id="profile-pic" src="../img/FotoPerfilPedro.png" alt="Foto de Perfil"/>
           <p id="profile-name">Pedro Henrique de Oliveira Silva</p>
           <button id="logout-button">Sair</button>
         </div>
@@ -72,10 +72,16 @@
     
     <div id="upload-modal" class="modal-overlay" style="display: none;">
       <div class="modal-content">
-        <h3>Alterar Foto de Perfil</h3>
+        <button id="cancel-upload-1" class="btn-cancelar primeiro">Voltar</button>
+        <h3>Alterar foto de perfil</h3>
+        <div class="image-upload">
+          <label for="file-input">
+            <img src="../img/imgCAM.png" class="camera-icon">
+            </label>
+            <input type="file" id="file-input" accept="image/*">
+        </div>
+
         <p>Escolha uma imagem do seu computador.</p>
-        <input type="file" id="file-input" accept="image/*">
-        <button id="cancel-upload-1" class="btn-cancelar">Cancelar</button>
       </div>
     </div>
 
@@ -85,7 +91,7 @@
         <img id="preview-image" src="" alt="Preview da nova foto" style="max-width: 200px; max-height: 200px; margin: 10px auto;">
         <div>
           <button id="confirm-upload" class="btn-confirmar">Confirmar</button>
-          <button id="cancel-upload-2" class="btn-cancelar">Escolher Outra</button>
+          <button id="cancel-upload-2" class="btn-cancelar segundo">Escolher Outra</button>
         </div>
       </div>
     </div>
