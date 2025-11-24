@@ -4,13 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+
+    <!-- CSS -->
     <link rel="stylesheet" href="../css/dashboard.css" />
   </head>
 
   <body>
+    <!-- Header -->
     <header>
       <div class="banner">
         <img src="../img/BannerInforSenhas.jpg" alt="Banner Infor Senhas" />
@@ -22,13 +27,14 @@
         </div>
 
         <div class="profile">
-          <img id="profile-pic" src="../img/FotoPerfilPedro.png" alt="Foto de Perfil"/>
+          <img id="profile-pic" src="../img/FotoPerfilPedro.png" alt="Foto de Perfil" />
           <p id="profile-name">Pedro Henrique de Oliveira Silva</p>
           <button id="logout-button">Sair</button>
         </div>
       </nav>
     </header>
 
+    <!-- Main Content -->
     <main class="container">
       <h1 id="greeting-name" class="nome-estudante">Olá, Pedro Silva!</h1>
 
@@ -38,11 +44,13 @@
             <h2 id="senhas-quantidade">5</h2>
             <p>Senhas disponíveis</p>
           </div>
+
           <div class="botoes">
             <button id="comprar-senhas" class="comprar-senhas">Comprar senhas</button>
             <button id="ver-historico" class="ver-historico">Ver histórico de pagamentos</button>
           </div>
         </div>
+
         <div class="qrcode">
           <img src="../img/QRcode.png" alt="QR Code" />
           <div class="btn-cardapio">
@@ -52,43 +60,49 @@
       </section>
     </main>
 
+    <!-- Footer -->
     <footer>
       <div class="footer">
-        <img class="logo" src="../img/LogoInforSenhas-White.png" alt="InforSenhas">
+        <img class="logo" src="../img/LogoInforSenhas-White.png" alt="InforSenhas" />
         <div class="texto">
           <p>Nome de utilizador: <span id="footer-username">Pedro Silva </span><a id="footer-logout" href="">(Sair)</a></p>
           <p>Politica de Proteção de Ddados IPS</p>
         </div>
+
         <div class="social">
-          <a href=""><img src="../img/iconFaceBook.png" alt="Facebook"></a>
-          <a href=""><img src="../img/iconInsta.png" alt="Instagram"></a>
-          <a href=""><img src="../img/iconLinkedin.png" alt="LinkedIn"></a>
-          <a href=""><img src="../img/iconYT.png" alt="Youtube"></a>
-          <a href=""><img src="../img/iconTW.png" alt="Twitter"></a>
-          <a href=""><img src="../img/iconSpotify.png" alt="Spotify"></a>
+          <a href=""><img src="../img/iconFaceBook.png" alt="Facebook" /></a>
+          <a href=""><img src="../img/iconInsta.png" alt="Instagram" /></a>
+          <a href=""><img src="../img/iconLinkedin.png" alt="LinkedIn" /></a>
+          <a href=""><img src="../img/iconYT.png" alt="Youtube" /></a>
+          <a href=""><img src="../img/iconTW.png" alt="Twitter" /></a>
+          <a href=""><img src="../img/iconSpotify.png" alt="Spotify" /></a>
         </div>
       </div>
     </footer>
-    
+
+    <!-- Modal: Upload -->
     <div id="upload-modal" class="modal-overlay" style="display: none;">
       <div class="modal-content">
         <button id="cancel-upload-1" class="btn-cancelar primeiro">Voltar</button>
         <h3>Alterar foto de perfil</h3>
+
         <div class="image-upload">
           <label for="file-input">
-            <img src="../img/imgCAM.png" class="camera-icon">
-            </label>
-            <input type="file" id="file-input" accept="image/*">
+            <img src="../img/imgCAM.png" class="camera-icon" />
+          </label>
+          <input type="file" id="file-input" accept="image/*" />
         </div>
 
         <p>Escolha uma imagem do seu computador.</p>
       </div>
     </div>
 
+    <!-- Modal: Confirm -->
     <div id="confirm-modal" class="modal-overlay" style="display: none;">
       <div class="modal-content">
         <h3>Confirmar nova foto?</h3>
-        <img id="preview-image" src="" alt="Preview da nova foto" style="max-width: 200px; max-height: 200px; margin: 10px auto;">
+        <img id="preview-image" src="" alt="Preview da nova foto" style="max-width: 200px; max-height: 200px; margin: 10px auto;" />
+
         <div>
           <button id="confirm-upload" class="btn-confirmar">Confirmar</button>
           <button id="cancel-upload-2" class="btn-cancelar segundo">Escolher Outra</button>
@@ -96,6 +110,7 @@
       </div>
     </div>
 
+    <!-- JS -->
     <script src="../js/dashboard.js" defer></script>
   </body>
 </html>
