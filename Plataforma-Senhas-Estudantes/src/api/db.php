@@ -1,7 +1,7 @@
 <?php
 
 $host = '127.0.0.1';
-$port = '3306';
+$port = '3300';
 $db   = 'inforsenhas';
 $user = 'root';
 $pass = 'root';

@@ -7,7 +7,7 @@ let verMaisClicado = false; // Sinaliza se o botão foi clicado
 
 async function atualizarTabela() {
   try {
-    const resposta = await fetch("http://localhost:8888/get_validacoes.php");
+    const resposta = await fetch("http://localhost:3000/api/get_validacoes.php");
     const dados = await resposta.json();
     todasValidacoes = dados; // Atualiza array global
 
@@ -49,7 +49,7 @@ verMaisBtn.addEventListener("click", () => {
 });
 
 // Atualiza tabela a cada 2 segundos, mas mantém a limitação inicial
-setInterval(atualizarTabela,  250);
+setInterval(atualizarTabela,  2000);
 
 // Primeira atualização ao carregar a página
 atualizarTabela();
