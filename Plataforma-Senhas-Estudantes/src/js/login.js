@@ -17,13 +17,18 @@ document.addEventListener('DOMContentLoaded', () => {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ email, password }) 
+
+          body: JSON.stringify({ 
+            email_Pessoa: email, 
+            password_Pessoa: password 
+          }) 
         });
 
         const data = await response.json();
 
         if (response.ok) {
           try {
+
             if (data.user) localStorage.setItem('user', JSON.stringify(data.user));
             if (data.role) localStorage.setItem('role', data.role);
           } catch (e) {

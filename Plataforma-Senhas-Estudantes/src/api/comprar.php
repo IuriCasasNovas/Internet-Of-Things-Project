@@ -36,13 +36,14 @@ try {
     if (($aluno['Total'] + $qtd) > 30) throw new Exception("Limite de carteira excedido.");
 
     $valorTotal = $qtd * 2.50;
-    $sql = "INSERT INTO Compra (Aluno, Valor_Total, Metodo_Pagamento, Data_Hora) VALUES (?, ?, ?, NOW())";
+
+    $sql = "INSERT INTO Compra (Aluno, Valor_Total_Compra, Metodo_Pagamento_Compra, Data_Hora_Compra) VALUES (?, ?, ?, NOW())";
     $pdo->prepare($sql)->execute([$aluno['Id_Aluno'], $valorTotal, $metodosValidos[$metodo]]);
     $idCompra = $pdo->lastInsertId();
 
-
     $idEstado = $pdo->query("SELECT Id_Estado FROM Estado WHERE Estado = 'Ativo'")->fetchColumn() ?: 1;
-    $stmtSenha = $pdo->prepare("INSERT INTO Senha (Compra, Estado, Preco, Data_Validade) VALUES (?, ?, 2.50, DATE_ADD(NOW(), INTERVAL 1 YEAR))");
+
+    $stmtSenha = $pdo->prepare("INSERT INTO Senha (Compra, Estado, Preco_Senha, Data_Validade_Senha) VALUES (?, ?, 2.50, DATE_ADD(NOW(), INTERVAL 1 YEAR))");
     
     for ($i = 0; $i < $qtd; $i++) $stmtSenha->execute([$idCompra, $idEstado]);
 
@@ -62,7 +63,6 @@ try {
     if ($pdo->inTransaction()) $pdo->rollBack();
     json_out(500, $e->getMessage());
 }
-
 
 function json_out($code, $msg) {
     http_response_code($code);
