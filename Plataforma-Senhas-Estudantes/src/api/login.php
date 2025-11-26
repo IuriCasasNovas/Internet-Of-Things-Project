@@ -6,8 +6,8 @@ require 'db.php';
 $json = file_get_contents('php://input');
 $data = json_decode($json, true);
 
-$email = $data['email'] ?? '';
-$password = $data['password'] ?? '';
+$email = $data['email_Pessoa'] ?? '';
+$password = $data['password_Pessoa'] ?? '';
 
 if (empty($email) || empty($password)) {
     http_response_code(400);
@@ -16,17 +16,17 @@ if (empty($email) || empty($password)) {
 }
 
 try {
-    $sql = "SELECT P.Id_Pessoa, P.Nome, P.Email, P.Palavra_Passe, P.Foto, 
+    $sql = "SELECT P.Id_Pessoa, P.Nome_Pessoa, P.Email_Pessoa, P.Palavra_Passe_Pessoa, P.Foto_Pessoa, 
                    Adm.Id_Administrador, Aux.Id_Auxiliar, Al.Id_Aluno
             FROM Pessoa AS P
             LEFT JOIN Administrador AS Adm ON P.Id_Pessoa = Adm.Pessoa
             LEFT JOIN Auxiliar AS Aux ON P.Id_Pessoa = Aux.Pessoa
             LEFT JOIN Aluno AS Al ON P.Id_Pessoa = Al.Pessoa
-            WHERE P.Email = ?";
+            WHERE P.Email_Pessoa = ?";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$email]);
-    $user = $stmt->fetch();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$user) {
         http_response_code(401);
@@ -35,10 +35,10 @@ try {
     }
 
     $passwordMatches = false;
-    if (preg_match('/^\$2[ay]\$/', $user['Palavra_Passe'])) {
-        $passwordMatches = password_verify($password, $user['Palavra_Passe']);
+    if (preg_match('/^\$2[ay]\$/', $user['Palavra_Passe_Pessoa'])) {
+        $passwordMatches = password_verify($password, $user['Palavra_Passe_Pessoa']);
     } else {
-        $passwordMatches = ($password === $user['Palavra_Passe']);
+        $passwordMatches = ($password === $user['Palavra_Passe_Pessoa']);
     }
 
     if (!$passwordMatches) {
@@ -63,9 +63,9 @@ try {
 
     $_SESSION['user'] = [
         'id' => $user['Id_Pessoa'],
-        'nome' => $user['Nome'],
-        'email' => $user['Email'],
-        'foto' => $user['Foto'],
+        'nome' => $user['Nome_Pessoa'],
+        'email' => $user['Email_Pessoa'],
+        'foto' => $user['Foto_Pessoa'],
         'role' => $role
     ];
 

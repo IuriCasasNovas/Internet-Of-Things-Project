@@ -25,7 +25,6 @@ if (!in_array($file['type'], $allowedTypes)) {
     exit;
 }
 
-
 $uploadDir = __DIR__ . '/../uploads/profiles/'; 
 if (!is_dir($uploadDir)) {
     mkdir($uploadDir, 0777, true);
@@ -37,19 +36,18 @@ $targetPath = $uploadDir . $filename;
 $webPath = "/uploads/profiles/" . $filename;
 
 try {
-    $stmt = $pdo->prepare("SELECT Foto FROM Pessoa WHERE Id_Pessoa = ?");
+    $stmt = $pdo->prepare("SELECT Foto_Pessoa FROM Pessoa WHERE Id_Pessoa = ?");
     $stmt->execute([$userId]);
     $oldPhoto = $stmt->fetchColumn();
 
     if (move_uploaded_file($file['tmp_name'], $targetPath)) {
         
-        $update = $pdo->prepare("UPDATE Pessoa SET Foto = ? WHERE Id_Pessoa = ?");
+        $update = $pdo->prepare("UPDATE Pessoa SET Foto_Pessoa = ? WHERE Id_Pessoa = ?");
         $update->execute([$webPath, $userId]);
 
         $_SESSION['user']['foto'] = $webPath;
 
         if ($oldPhoto) {
-
             $oldFilePath = __DIR__ . '/..' . $oldPhoto; 
             if (file_exists($oldFilePath) && is_file($oldFilePath)) {
                 unlink($oldFilePath);

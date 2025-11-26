@@ -8,3 +8,4 @@ echo
 
 # Caminho para o PHP do MAMP
 /Applications/MAMP/bin/php/php8.1.31/bin/php -S localhost:3000 -t /Users/iurinovas/Escola/IPS/Internet-Of-Things-Project/Plataforma-Senhas-Estudantes/src
+x\
