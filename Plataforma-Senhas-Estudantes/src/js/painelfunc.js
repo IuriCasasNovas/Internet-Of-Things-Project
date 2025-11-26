@@ -30,3 +30,31 @@ verMaisBtn.addEventListener("click", () => {
 
   verMaisBtn.parentElement.style.display = "none";
 });
+
+async function handleLogout() {
+  try {
+    const response = await fetch('../api/logout.php', { method: 'POST' });
+    const data = await response.json();
+    
+    if (response.ok) {
+      console.log('Logout bem-sucedido. Redirecionando...');
+      window.location.href = data.redirectTo; 
+    }
+  } catch (error) {
+    console.error('Erro ao fazer logout:', error);
+  }
+}
+
+function attachEventListeners() {
+  const logoutButton = document.getElementById('logout-btn');
+  const footerLogout = document.getElementById('footer-logout');
+  
+
+  if (logoutButton) logoutButton.addEventListener('click', handleLogout);
+  if (footerLogout) {
+    footerLogout.addEventListener('click', (e) => {
+      e.preventDefault(); 
+      handleLogout();     
+    });
+  }
+}

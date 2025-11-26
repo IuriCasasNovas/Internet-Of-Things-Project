@@ -11,29 +11,52 @@
       <div class="banner">
         <img src="../img/BannerInforSenhas.jpg" alt="Banner Infor Senhas" />
       </div>
+
       <nav class="nav">
         <div class="logo">
           <img src="../img/LogoInforSenhas.png" alt="Logo Infor Senhas" />
         </div>
+
         <div class="profile">
-          <p>Administrador</p>
-          <button id="logout">Sair</button>
+          <img id="profile-pic" src="../img/FotoPerfilPedro.png" alt="Foto de perfil" />
+          <p id="profile-name">Pedro Henrique de Oliveira Silva</p>
+          <button id="logout-button">Sair</button>
         </div>
       </nav>
     </header>
 
     <main class="container">
-      <h1>Painel de Administração</h1>
-      <p>Bem-vindo ao painel do Administrador. Aqui poderá gerir utilizadores e configurações.</p>
-      <!-- TODO: adicionar funcionalidades de administração -->
+
+      <section class="painel">
+        <h1>Painel de Administração</h1>
+        <p>Bem-vindo ao painel do Administrador. Aqui poderá gerir utilizadores e configurações.</p>
+        <section class="botoes">
+          <a href="paineladmin.html" class="gest-alunos">Gerir alunos</a>
+         <a href="paineladmin2.html" class="relatorio-financeiro">Relatórios financeiros</a> 
+        </section>
+        <!-- TODO: adicionar funcionalidades de administração -->
+      </section>
+        
     </main>
 
-    <script>
-      document.getElementById('logout').addEventListener('click', () => {
-        localStorage.removeItem('user');
-        localStorage.removeItem('role');
-        window.location.href = '/pages/login.html';
-      });
-    </script>
+    <footer>
+      <div class="footer">
+        <img class="logo" src="../img/LogoInforSenhas-White.png" alt="InforSenhas">
+        <div class="texto">
+          <p>Nome de utilizador: <span id="footer-username">Pedro Silva </span><a id="footer-logout" href="">(Sair)</a></p>
+          <p>Politica de Proteção de Dados IPS</p>
+        </div>
+        <div class="social">
+          <a href="https://www.facebook.com/ipsetubal"><img src="../img/iconFaceBook.png" alt="Facebook"></a>
+          <a href="https://www.instagram.com/politecnicodesetubal/"><img src="../img/iconInsta.png" alt="Instagram"></a>
+          <a href="https://www.linkedin.com/school/instituto-politecnico-de-setubal/posts/?feedView=all"><img src="../img/iconLinkedin.png" alt="LinkedIn"></a>
+          <a href="https://www.youtube.com/user/IPSETUBAL"><img src="../img/iconYT.png" alt="Youtube"></a>
+          <a href="https://www.tiktok.com/@politecnicodesetubal"><img src="../img/iconTW.png" alt="Twitter"></a>
+          <a href="https://open.spotify.com/show/7AYJMm6jKEJ0lpz7aaMu3f"><img src="../img/iconSpotify.png" alt="Spotify"></a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../js/admin.js" defer></script>
   </body>
 </html>

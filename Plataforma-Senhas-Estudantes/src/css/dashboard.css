@@ -142,7 +142,7 @@ main.container {
     gap: 10px;
 }
 
-.botoes button {
+.botoes a {
     height: 45px;
     border: none;
     border-radius: 6px;
@@ -150,9 +150,12 @@ main.container {
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;    
 }
 
-.botoes button:hover {
+.botoes a:hover {
     background-color: #22bdb5ba;
 }
 
@@ -162,6 +165,16 @@ main.container {
 }
 
 .botoes .ver-historico {
+    background-color: #22BDB6;
+    transition: background-color 0.3s;
+}
+
+.botoes .gest-alunos {
+    background-color: #009b9e;
+    transition: background-color 0.3s;
+}
+
+.botoes .relatorio-financeiro {
     background-color: #22BDB6;
     transition: background-color 0.3s;
 }
