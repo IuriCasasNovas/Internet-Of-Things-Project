@@ -1,34 +1,51 @@
-function toggleMenu() {
-  document.getElementById("mobileMenu").classList.toggle("open");
-}
-
+const tabelaBody = document.querySelector("table tbody");
 const verMaisBtn = document.querySelector("#ver-mais button");
 
-const tabelaBody = document.querySelector("table tbody");
+let todasValidacoes = []; // Guarda todos os dados do PHP
+const mostrarInicial = 5; // Número de linhas a mostrar inicialmente
+let verMaisClicado = false; // Sinaliza se o botão foi clicado
 
+async function atualizarTabela() {
+  try {
+    const resposta = await fetch("http://localhost:3000/api/get_validacoes.php");
+    const dados = await resposta.json();
+    todasValidacoes = dados; // Atualiza array global
 
-const pessoasExtras = [
-  { nome: "Carla Mendes", numero: "2025000011", estado: "Válido", dataHora: "09-10-2025  12:45" },
-  { nome: "Marta Sousa", numero: "2025000012", estado: "Válido", dataHora: "09-10-2025  13:10" },
-  { nome: "Sara Costa", numero: "2025000013", estado: "Inválido", dataHora: "09-10-2025  14:02" },
-  { nome: "Patrícia Gomes", numero: "2025000014", estado: "Válido", dataHora: "09-10-2025  14:30" },
-];
+    if (!verMaisClicado) {
+      // Mostra só as primeiras linhas
+      preencherTabela(todasValidacoes.slice(0, mostrarInicial));
+    } else {
+      // Já clicou "Ver mais", mostra tudo
+      preencherTabela(todasValidacoes);
+    }
+  } catch (e) {
+    console.error("Erro ao carregar dados:", e);
+  }
+}
 
-verMaisBtn.addEventListener("click", () => {
-  pessoasExtras.forEach((pessoa) => {
-    const novaLinha = document.createElement("tr");
+function preencherTabela(linhas) {
+  // Limpa tabela atual
+  tabelaBody.innerHTML = "";
 
-    novaLinha.innerHTML = `
-      <td>${pessoa.nome}</td>
-      <td>${pessoa.numero}</td>
-      <td><span class="estado ${pessoa.estado.toLowerCase()}">${pessoa.estado}</span></td>
-      <td>${pessoa.dataHora}</td>
+  // Adiciona linhas
+  linhas.forEach((row) => {
+    const tr = document.createElement("tr");
+    const estadoClass = row.Resultado.toLowerCase() === "valido" ? "estado válido" : "estado inválido";
+    tr.innerHTML = `
+      <td>${row.Nome}</td>
+      <td>${row.Numero_Aluno}</td>
+      <td><span class="${estadoClass}">${row.Resultado}</span></td>
+      <td>${row.Data_Hora}</td>
     `;
-
-    tabelaBody.appendChild(novaLinha);
+    tabelaBody.appendChild(tr);
   });
+}
 
-  verMaisBtn.parentElement.style.display = "none";
+// Evento do botão "Ver mais"
+verMaisBtn.addEventListener("click", () => {
+  verMaisClicado = true;
+  preencherTabela(todasValidacoes); // Mostra todas as linhas
+  verMaisBtn.parentElement.style.display = "none"; // Oculta o botão
 });
 
 async function handleLogout() {

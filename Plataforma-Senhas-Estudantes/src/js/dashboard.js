@@ -1,7 +1,22 @@
 let ficheiroSelecionado = null;
 
 function updateProfilePictures(fotoPath) {
-  const path = fotoPath ? fotoPath : '../img/default-profile.png';
+  let path = '../img/default-profile.png';
+
+  if (fotoPath && fotoPath.trim() !== '') {
+    let cleanPath = fotoPath.replace(/^\//, ''); 
+    if (!cleanPath.includes('/')) {
+        path = '../uploads/profiles/' + cleanPath;
+    }
+    else {
+        if (cleanPath.startsWith('../')) {
+            path = cleanPath;
+        } else {
+            path = '../' + cleanPath;
+        }
+    }
+  }
+
   const profilePics = document.querySelectorAll('#profile-pic, #profile-pic-footer'); 
   profilePics.forEach(pic => {
     if (pic) pic.src = path;
@@ -98,6 +113,22 @@ function attachEventListeners() {
   const confirmUploadBtn = document.getElementById('confirm-upload');
   const cancelUpload1Btn = document.getElementById('cancel-upload-1');
   const cancelUpload2Btn = document.getElementById('cancel-upload-2');
+  const btnComprar = document.querySelector('.comprar-senhas');
+  const btnCardapio = document.getElementById('btn-cardapio');
+
+  if (btnCardapio) {
+    btnCardapio.addEventListener('click', (e) => {
+      e.preventDefault(); 
+      window.location.href = 'https://software.movelife.net/pt-PT/Menus/PublicCC/Tj6o3O_vCFB2LmCmm9VUjw%3d%3d';
+    });
+  }
+
+  if (btnComprar) {
+    btnComprar.addEventListener('click', () => {
+
+      window.location.href = 'checkout.html';
+    });
+  }
 
   if (logoutButton) logoutButton.addEventListener('click', handleLogout);
   if (footerLogout) {
