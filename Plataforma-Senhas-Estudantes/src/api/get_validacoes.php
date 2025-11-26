@@ -6,7 +6,6 @@ $username = "root";
 $password = "root";
 $dbname = "inforSenhas";
 
-// Conexão
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
@@ -14,17 +13,16 @@ if ($conn->connect_error) {
     exit();
 }
 
-// Query para Validacao
 $sql = "
     SELECT 
-        p.Nome,
+        p.Nome_Pessoa,
         a.Numero_Aluno,
-        v.Resultado,
-        v.Data_Hora
+        v.Resultado_Validacao,
+        v.Data_Hora_Validacao
     FROM Validacao v
     JOIN Aluno a ON v.Aluno = a.Id_Aluno
     JOIN Pessoa p ON a.Pessoa = p.Id_Pessoa
-    ORDER BY v.Data_Hora DESC
+    ORDER BY v.Data_Hora_Validacao DESC
     LIMIT 50
 ";
 
@@ -35,10 +33,10 @@ $dados = [];
 if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $dados[] = [
-            "Nome" => $row["Nome"],
+            "Nome" => $row["Nome_Pessoa"], 
             "Numero_Aluno" => $row["Numero_Aluno"],
-            "Resultado" => $row["Resultado"],
-            "Data_Hora" => $row["Data_Hora"]
+            "Resultado" => $row["Resultado_Validacao"],
+            "Data_Hora" => $row["Data_Hora_Validacao"]
         ];
     }
 }

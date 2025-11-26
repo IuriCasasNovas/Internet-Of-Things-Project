@@ -11,7 +11,7 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'aluno') {
 
 try {
     $pessoaId = $_SESSION['user']['id'];
-
+    
     $sql = "SELECT COUNT(s.Id_Senha) AS quantidade 
             FROM Senha AS s 
             JOIN Estado AS e ON s.Estado = e.Id_Estado 
@@ -21,7 +21,7 @@ try {
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$pessoaId]);
-    $result = $stmt->fetch();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
     echo json_encode($result);
 
