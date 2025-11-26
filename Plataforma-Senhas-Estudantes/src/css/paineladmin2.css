@@ -113,7 +113,7 @@ header{
     width: 25px;
     height: 25px;
 }
-.navbar .info-pessoal{
+.navbar .profile{
     width: 35%;
     height: 30%;
     display: flex;
@@ -121,10 +121,10 @@ header{
     align-items: center;
     justify-content: space-between;
 }
-.navbar .info-pessoal img{
+.navbar .profile img{
     width: 13%;
 }
-.navbar .info-pessoal button{
+.navbar .profile button{
     font-weight: 500;
     font-size: 1em;
     width: 10vh;
