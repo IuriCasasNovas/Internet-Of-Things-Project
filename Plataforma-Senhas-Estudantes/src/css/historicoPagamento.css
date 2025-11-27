@@ -112,3 +112,24 @@ td {
         font-size: 0.8rem;
     }
 }
+
+
+        .paginacao {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            gap: 15px;
+        }
+        .btn-pag {
+            padding: 8px 16px;
+            background-color: #00b894;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-pag:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }

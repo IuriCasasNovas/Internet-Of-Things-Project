@@ -35,7 +35,7 @@ try {
     if (!$aluno) throw new Exception("Aluno não encontrado.");
     if (($aluno['Total'] + $qtd) > 30) throw new Exception("Limite de carteira excedido.");
 
-    $valorTotal = $qtd * 2.50;
+    $valorTotal = $qtd * 2.90;
 
     $sql = "INSERT INTO Compra (Aluno, Valor_Total_Compra, Metodo_Pagamento_Compra, Data_Hora_Compra) VALUES (?, ?, ?, NOW())";
     $pdo->prepare($sql)->execute([$aluno['Id_Aluno'], $valorTotal, $metodosValidos[$metodo]]);
@@ -43,7 +43,7 @@ try {
 
     $idEstado = $pdo->query("SELECT Id_Estado FROM Estado WHERE Estado = 'Ativo'")->fetchColumn() ?: 1;
 
-    $stmtSenha = $pdo->prepare("INSERT INTO Senha (Compra, Estado, Preco_Senha, Data_Validade_Senha) VALUES (?, ?, 2.50, DATE_ADD(NOW(), INTERVAL 1 YEAR))");
+    $stmtSenha = $pdo->prepare("INSERT INTO Senha (Compra, Estado, Preco_Senha, Data_Validade_Senha) VALUES (?, ?, 2.90, DATE_ADD(NOW(), INTERVAL 1 YEAR))");
     
     for ($i = 0; $i < $qtd; $i++) $stmtSenha->execute([$idCompra, $idEstado]);
 
