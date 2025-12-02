@@ -52,7 +52,7 @@ try {
 
     if ($user['Id_Administrador']) { 
         $role = 'admin'; 
-        $redirectTo = 'admin.html'; 
+        $redirectTo = 'paineladmin.html'; 
     } elseif ($user['Id_Auxiliar']) { 
         $role = 'auxiliar'; 
         $redirectTo = 'painelfunc.html'; 
