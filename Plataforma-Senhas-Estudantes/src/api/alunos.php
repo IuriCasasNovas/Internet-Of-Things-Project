@@ -1,39 +1,57 @@
 <?php
-// api_alunos.php
-header('Content-Type: application/json');
-include 'db.php';
+header('Content-Type: application/json; charset=utf-8');
 
-$sql = "
-    SELECT
-        A.Id_Aluno,
-        P.Nome,
-        A.Numero_Aluno,
-        A.Estado,
-        (
-            SELECT COUNT(S.Id_Senha)
-            FROM Senha S
-            JOIN Compra C ON S.Compra = C.Id_Compra
-            WHERE C.Aluno = A.Id_Aluno
-            -- Podes ajustar a condição 'Estado = 1' dependendo de qual ID de estado significa 'Ativa' na tua tabela Estado.
-            AND S.Estado = (SELECT Id_Estado FROM Estado WHERE Estado = 'Emitida')
-        ) AS Total_Senhas
-    FROM
-        Aluno A
-    JOIN
-        Pessoa P ON A.Pessoa = P.Id_Pessoa
-    ORDER BY P.Nome ASC
-";
+require 'db.php'; 
 
-$result = $conn->query($sql);
-
-$alunos = array();
-
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        $alunos[] = $row;
-    }
+if (!isset($pdo)) {
+    http_response_code(500);
+    echo json_encode(["erro" => "Falha na conexão: variavel pdo não encontrada."]);
+    exit;
 }
 
-echo json_encode($alunos);
-$conn->close();
+try {
+    $busca = isset($_GET['busca']) ? $_GET['busca'] : null;
+
+    $sql = "
+        SELECT 
+            A.Id_Aluno,
+            P.Nome_Pessoa,
+            P.Foto_Pessoa,
+            A.Numero_Aluno,
+            A.Curso_Aluno,
+            A.Estado,
+            (
+                SELECT COUNT(S.Id_Senha) 
+                FROM Compra C
+                JOIN Senha S ON S.Compra = C.Id_Compra
+                WHERE C.Aluno = A.Id_Aluno
+            ) AS Total_Senhas
+        FROM Aluno A
+        JOIN Pessoa P ON A.Pessoa = P.Id_Pessoa
+    ";
+
+    if ($busca) {
+        $sql .= " WHERE P.Nome_Pessoa LIKE :buscaNome OR A.Numero_Aluno LIKE :buscaNumero";
+    }
+
+    $sql .= " ORDER BY P.Nome_Pessoa ASC";
+
+    $stmt = $pdo->prepare($sql);
+
+    if ($busca) {
+        $termo = "%" . $busca . "%";
+        $stmt->bindValue(':buscaNome', $termo);
+        $stmt->bindValue(':buscaNumero', $termo);
+    }
+
+    $stmt->execute();
+    
+    $alunos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo json_encode($alunos);
+
+} catch (PDOException $e) {
+    http_response_code(500);
+    echo json_encode(["erro" => "Erro na query: " . $e->getMessage()]);
+}
 ?>

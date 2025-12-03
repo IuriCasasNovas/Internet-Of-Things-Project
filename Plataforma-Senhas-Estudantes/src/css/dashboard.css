@@ -173,16 +173,6 @@ main.container {
     background-color: #22BDB6;
 }
 
-.botoes .gest-alunos {
-    background-color: #009b9e;
-    transition: background-color 0.3s;
-}
-
-.botoes .relatorio-financeiro {
-    background-color: #22BDB6;
-    transition: background-color 0.3s;
-}
-
 /* QR Code */
 .qrcode {
     display: flex;
