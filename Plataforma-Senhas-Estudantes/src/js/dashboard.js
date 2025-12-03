@@ -113,9 +113,18 @@ function attachEventListeners() {
   const confirmUploadBtn = document.getElementById('confirm-upload');
   const cancelUpload1Btn = document.getElementById('cancel-upload-1');
   const cancelUpload2Btn = document.getElementById('cancel-upload-2');
-  const btnComprar = document.querySelector('.comprar-senhas');
+  const btnComprar = document.getElementById('btn-comprar');
   const btnCardapio = document.getElementById('btn-cardapio');
+  const btnHistorico = document.getElementById('btn-historico');
 
+
+  if (btnHistorico) {
+    btnHistorico.addEventListener('click', () => {
+      window.location.href = 'historicoPagamento.html';
+    });
+  }
+
+  
   if (btnCardapio) {
     btnCardapio.addEventListener('click', (e) => {
       e.preventDefault(); 

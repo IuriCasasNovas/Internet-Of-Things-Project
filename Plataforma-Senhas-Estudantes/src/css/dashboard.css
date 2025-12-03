@@ -139,12 +139,17 @@ main.container {
 /* Buttons */
 .botoes {
     width: 40%;
+    height: 15vh;
     display: flex;
+    justify-content: center;
     flex-direction: column;
     gap: 10px;
 }
 
 .botoes a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 45px;
     border: none;
     border-radius: 6px;
@@ -152,9 +157,8 @@ main.container {
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s;
-    text-decoration: none;
-    justify-content: center;
-    align-items: center;    
+    text-decoration: none;  
+    text-align: center;
 }
 
 .botoes a:hover {
@@ -370,6 +374,10 @@ footer {
     .botoes {
         width: 100%;
     }
+
+    .botoes a{
+        padding: 20px;
+    }
 }
 
 /* Smartphones */
@@ -397,6 +405,7 @@ footer {
     .botoes {
         width: 100%;
         gap: 15px;
+        padding: 30px;
     }
 
     .qrcode {
@@ -432,6 +441,11 @@ footer {
     .botoes button {
         height: 40px;
         font-size: 0.9rem;
+    }
+
+    .botoes {
+        width: 100%;
+        padding: 30px;
     }
 
     .footer .logo {
