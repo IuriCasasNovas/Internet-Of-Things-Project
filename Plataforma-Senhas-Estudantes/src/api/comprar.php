@@ -76,13 +76,13 @@ function enviarEmail($email, $nome, $idCompra, $qtd, $total, $dados) {
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'sheshinne@gmail.com';
-        $mail->Password = 'tckb rcja mplj lieu';
+        $mail->Username = 'inforsenhas.oficial@gmail.com';
+        $mail->Password = 'rzif kots bnjf geag';
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
         $mail->CharSet = 'UTF-8';
 
-        $mail->setFrom('sheshinne@gmail.com', 'InforSenhas');
+        $mail->setFrom('inforsenhas.oficial@gmail.com', 'InforSenhas');
         $mail->addAddress($email, $nome);
         $mail->isHTML(true);
         $mail->Subject = "Recibo de Compra #$idCompra";
