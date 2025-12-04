@@ -35,7 +35,14 @@ header .btn-voltar {
     height: 5vh;
 }
 
-.btn-voltar a {
+header a {
+    background-color: #009697;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10%;
+    height: 5vh;
     text-decoration: none;
     color: white;
     font-weight: 500;

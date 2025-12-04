@@ -7,7 +7,7 @@
 }
 
 body {
-    background: #f7fafb;
+    background: #22BDB6;
     padding: 40px 20px;
     display: flex;
     flex-direction: column;
@@ -21,26 +21,31 @@ header{
     justify-content: space-between;
 }
 
-.header img {
+header img {
     left: 0;
     width: 200px;
     height: auto;
     margin-bottom: 40px;
 }
 
-.header a {
-    height: 35px;
-    padding: 5px 20px;
+header a {
+    background-color: #009697;
     border-radius: 5px;
-    background-color: #22BDB6;
-    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10%;
+    height: 5vh;
     text-decoration: none;
+    color: white;
+    font-weight: 500;
+    font-size: 90%;
 }
 
 /* Título */
 .titulo {
     font-size: 1.7rem;
-    color: #109e9e;
+    color: #ffffff;
     margin-bottom: 25px;
     text-align: center;
 }
