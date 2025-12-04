@@ -146,7 +146,7 @@ main.container {
     gap: 10px;
 }
 
-.botoes a {
+.botoes button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -161,7 +161,7 @@ main.container {
     text-align: center;
 }
 
-.botoes a:hover {
+.botoes button:hover {
     background-color: #22bdb5ba;
 }
 
