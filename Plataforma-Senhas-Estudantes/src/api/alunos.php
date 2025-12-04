@@ -19,7 +19,7 @@ try {
             P.Foto_Pessoa,
             A.Numero_Aluno,
             A.Curso_Aluno,
-            A.Estado,
+            E.Estado AS Estado,
             (
                 SELECT COUNT(S.Id_Senha) 
                 FROM Compra C
@@ -28,6 +28,7 @@ try {
             ) AS Total_Senhas
         FROM Aluno A
         JOIN Pessoa P ON A.Pessoa = P.Id_Pessoa
+        JOIN Estado E ON A.Estado = E.Id_Estado
     ";
 
     if ($busca) {
