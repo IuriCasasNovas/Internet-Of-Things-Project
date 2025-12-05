@@ -57,6 +57,7 @@ header{
 }
 
 .logout-btn {
+    text-decoration: none;
     background-color: #22BDB6;
     color: white;
     padding: 10px 20px;
