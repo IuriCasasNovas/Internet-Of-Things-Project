@@ -1,8 +1,8 @@
 <?php
 
 $host = '127.0.0.1';
-$port = '3306';
-$db   = 'inforsenhas';
+$port = '8889'; // porta do MySQL do MAMP
+$db   = 'inforSenhasIuri';
 $user = 'root';
 $pass = 'root';
 $charset = 'utf8mb4';
