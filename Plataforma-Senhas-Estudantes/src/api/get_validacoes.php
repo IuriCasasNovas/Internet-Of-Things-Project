@@ -4,9 +4,11 @@ header('Content-Type: application/json; charset=utf-8');
 $servername = "localhost";
 $username = "root";
 $password = "root";
-$dbname = "inforSenhas";
+$dbname = "inforSenhasIuri";
 
+// Conexão mysqli com charset
 $conn = new mysqli($servername, $username, $password, $dbname);
+$conn->set_charset("utf8mb4");
 
 if ($conn->connect_error) {
     echo json_encode(["error" => "Erro ao conectar: " . $conn->connect_error]);
@@ -33,7 +35,7 @@ $dados = [];
 if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $dados[] = [
-            "Nome" => $row["Nome_Pessoa"], 
+            "Nome" => $row["Nome_Pessoa"],
             "Numero_Aluno" => $row["Numero_Aluno"],
             "Resultado" => $row["Resultado_Validacao"],
             "Data_Hora" => $row["Data_Hora_Validacao"]
