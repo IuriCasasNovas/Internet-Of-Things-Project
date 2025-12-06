@@ -187,6 +187,63 @@ h1 {
     height: 40px;
 }
 
+.tooltip {
+    margin-bottom: 8px;
+    align-items: end;
+    position: relative;
+    display: flex;
+}
+
+.icon {
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #22BDB6;
+    color: white;
+    font-weight: bold;
+    cursor: default;
+    font-size: 14px;
+}
+
+/* Caixa oculta por padrão */
+.tooltip-box {
+    position: absolute;
+    top: 75%;
+    transform: translateY(-50%);
+    background: #22BDB6;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    width: 200px;
+    font-size: 14px;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.25s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 999;
+}
+
+/* Triângulo
+.tooltip-box::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -6px;
+    transform: translateY(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent #2a2a2a transparent transparent;
+} */
+
+/* Aparece quando passa o rato */
+.tooltip:hover .tooltip-box {
+    opacity: 1;
+    pointer-events: auto;
+}
+
 /* Responsividade */
 @media (max-width: 992px) {
     header {

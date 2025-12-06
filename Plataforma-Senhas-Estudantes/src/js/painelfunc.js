@@ -75,3 +75,10 @@ function attachEventListeners() {
     });
   }
 }
+
+
+// Abre/fecha o menu lateral no mobile
+function toggleMenu() {
+    const menu = document.getElementById("mobileMenu");
+    menu.classList.toggle("open");
+}
