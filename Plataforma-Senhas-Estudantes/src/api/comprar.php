@@ -25,34 +25,67 @@ if ($metodo === 'mbway' && !preg_match('/^9\d{8}$/', $tel)) json_out(400, 'Telem
 try {
     $pdo->beginTransaction();
 
+    // Obter aluno + total de senhas ativas
     $stmt = $pdo->prepare("
         SELECT Id_Aluno, 
-        (SELECT COUNT(*) FROM Senha s JOIN Compra c ON s.Compra = c.Id_Compra WHERE c.Aluno = Aluno.Id_Aluno AND s.Estado = (SELECT Id_Estado FROM Estado WHERE Estado='Ativo')) as Total
-        FROM Aluno WHERE Pessoa = ?");
+        (SELECT COUNT(*) FROM Senha s 
+         JOIN Compra c ON s.Compra = c.Id_Compra 
+         WHERE c.Aluno = Aluno.Id_Aluno 
+         AND s.Estado = (SELECT Id_Estado FROM Estado WHERE Estado='Ativo')
+        ) as Total
+        FROM Aluno 
+        WHERE Pessoa = ?
+    ");
     $stmt->execute([$user['id']]);
     $aluno = $stmt->fetch();
 
     if (!$aluno) throw new Exception("Aluno não encontrado.");
     if (($aluno['Total'] + $qtd) > 30) throw new Exception("Limite de carteira excedido.");
 
+    // Buscar cartão do aluno
+    $stmtCartao = $pdo->prepare("SELECT Id_Cartao FROM Cartao WHERE Aluno = ? AND Estado = 1 LIMIT 1");
+    $stmtCartao->execute([$aluno['Id_Aluno']]);
+    $idCartao = $stmtCartao->fetchColumn();
+
+    if (!$idCartao) throw new Exception("Nenhum cartão ativo associado ao aluno.");
+
+    // Criar compra
     $valorTotal = $qtd * 2.90;
 
-    $sql = "INSERT INTO Compra (Aluno, Valor_Total_Compra, Metodo_Pagamento_Compra, Data_Hora_Compra) VALUES (?, ?, ?, NOW())";
+    $sql = "INSERT INTO Compra (Aluno, Valor_Total_Compra, Metodo_Pagamento_Compra, Data_Hora_Compra)
+            VALUES (?, ?, ?, NOW())";
     $pdo->prepare($sql)->execute([$aluno['Id_Aluno'], $valorTotal, $metodosValidos[$metodo]]);
     $idCompra = $pdo->lastInsertId();
 
+    // Estado Ativo
     $idEstado = $pdo->query("SELECT Id_Estado FROM Estado WHERE Estado = 'Ativo'")->fetchColumn() ?: 1;
 
-    $stmtSenha = $pdo->prepare("INSERT INTO Senha (Compra, Estado, Preco_Senha, Data_Validade_Senha) VALUES (?, ?, 2.90, DATE_ADD(NOW(), INTERVAL 1 YEAR))");
-    
-    for ($i = 0; $i < $qtd; $i++) $stmtSenha->execute([$idCompra, $idEstado]);
+    // Criar senhas (agora com Cartao incluído)
+    $stmtSenha = $pdo->prepare("
+        INSERT INTO Senha (Compra, Cartao, Estado, Preco_Senha, Data_Validade_Senha)
+        VALUES (?, ?, ?, 2.90, DATE_ADD(NOW(), INTERVAL 1 YEAR))
+    ");
 
+    for ($i = 0; $i < $qtd; $i++) {
+        $stmtSenha->execute([$idCompra, $idCartao, $idEstado]);
+    }
+
+    // Commit
     $pdo->commit();
 
-    $res = ['success' => true, 'message' => 'Compra efetuada!', 'metodo' => $metodo];
-    
+    // Resposta
+    $res = [
+        'success' => true,
+        'message' => 'Compra efetuada!',
+        'metodo'  => $metodo
+    ];
+
     if ($metodo === 'multibanco') {
-        $res += ['entidade' => 21223, 'referencia' => rand(100000000, 999999999), 'valor' => number_format($valorTotal, 2)];
+        $res += [
+            'entidade'  => 21223,
+            'referencia'=> rand(100000000, 999999999),
+            'valor'     => number_format($valorTotal, 2)
+        ];
     }
 
     enviarEmail($user['email'], $user['nome'], $idCompra, $qtd, $valorTotal, $res);
@@ -62,49 +95,5 @@ try {
 } catch (Exception $e) {
     if ($pdo->inTransaction()) $pdo->rollBack();
     json_out(500, $e->getMessage());
-}
-
-function json_out($code, $msg) {
-    http_response_code($code);
-    echo json_encode(['message' => $msg]);
-    exit;
-}
-
-function enviarEmail($email, $nome, $idCompra, $qtd, $total, $dados) {
-    $mail = new PHPMailer(true);
-    try {
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'inforsenhas.oficial@gmail.com';
-        $mail->Password = 'rzif kots bnjf geag';
-        $mail->SMTPSecure = 'tls';
-        $mail->Port = 587;
-        $mail->CharSet = 'UTF-8';
-
-        $mail->setFrom('inforsenhas.oficial@gmail.com', 'InforSenhas');
-        $mail->addAddress($email, $nome);
-        $mail->isHTML(true);
-        $mail->Subject = "Recibo de Compra #$idCompra";
-
-        $extra = ($dados['metodo'] === 'multibanco') ? 
-            "<br><strong>Dados MB:</strong> Ent: {$dados['entidade']} | Ref: {$dados['referencia']}" : "";
-        
-        $mail->Body = "
-            <div style='font-family:sans-serif; padding:20px; border:1px solid #ddd;'>
-                <h2 style='color:#00b894'>Compra Confirmada</h2>
-                <p>Olá <b>$nome</b>, obrigado pela tua compra.</p>
-                <ul>
-                    <li>Ref: #$idCompra</li>
-                    <li>Qtd: $qtd Senhas</li>
-                    <li>Total: " . number_format($total, 2) . "€</li>
-                    <li>Método: {$dados['metodo']}</li>
-                </ul>
-                $extra
-                <p style='font-size:12px; color:#777'>InforSenhas Automático</p>
-            </div>";
-
-        $mail->send();
-    } catch (Exception $e) { error_log("Mail Error: {$mail->ErrorInfo}"); }
 }
 ?>

@@ -33,8 +33,11 @@ INSERT INTO Aluno (Pessoa, Estado, Curso_Aluno, Numero_Aluno) VALUES
 (9, 1, 'Informatica', 'A129'),
 (10, 1, 'Desporto', 'A130');
 
-INSERT INTO Auxiliar (Pessoa, Turno, Data_Contratacao_Auxiliar) VALUES
-(3, 2, '2022-09-01');
+INSERT INTO Auxiliar (Pessoa, Data_Contratacao_Auxiliar) VALUES
+(3, '2022-09-01');
+
+INSERT INTO Turno_Auxiliar (Id_auxiliar, Id_turno) VALUES
+(1, 2);
 
 INSERT INTO Cartao (Aluno, Estado) VALUES
 (1, 1),
@@ -56,24 +59,21 @@ INSERT INTO Compra (Aluno, Valor_Total_Compra, Metodo_Pagamento_Compra) VALUES
 (7, 2.50, 'Multibanco'),
 (8, 5.00, 'MB WAY');
 
-INSERT INTO Senha (Compra, Estado, Preco_Senha, Data_Validade_Senha, Data_Validacao_Senha, Auxiliar) VALUES
-(1, 1, 2.50, '2025-11-10 12:00:00', NULL, 1),
-(1, 1, 2.50, '2025-11-10 12:00:00', NULL, NULL),
-(2, 2, 5.00, '2025-11-11 12:00:00', '2025-11-03 12:00:00', 1),
-(3, 1, 3.00, '2025-11-12 12:00:00', NULL, NULL),
-(4, 1, 3.25, '2025-11-12 12:00:00', NULL, 1),
-(4, 1, 3.25, '2025-11-12 12:00:00', NULL, NULL),
-(5, 1, 4.20, '2025-11-13 12:00:00', NULL, NULL),
-(6, 1, 7.50, '2025-11-14 12:00:00', NULL, 1),
-(7, 1, 2.50, '2025-11-14 12:00:00', NULL, NULL),
-(8, 1, 5.00, '2025-11-15 12:00:00', NULL, 1);
+INSERT INTO Senha (Compra, Cartao, Estado, Preco_Senha, Data_Validade_Senha, Data_Validacao_Senha, Auxiliar) VALUES
+(1, 1, 1, 2.50, '2025-11-10 12:00:00', NULL, 1),
+(1, 1, 1, 2.50, '2025-11-10 12:00:00', NULL, NULL),
 
-INSERT INTO Validacao (Cartao, Aluno, Resultado_Validacao) VALUES
-(1, 1, 'Valido'),
-(2, 2, 'Invalido'),
-(3, 3, 'Valido'),
-(4, 4, 'Valido'),
-(5, 5, 'Invalido'),
-(6, 6, 'Valido'),
-(7, 7, 'Valido'),
-(8, 8, 'Invalido');
+(2, 2, 2, 5.00, '2025-11-11 12:00:00', '2025-11-03 12:00:00', 1),
+
+(3, 3, 1, 3.00, '2025-11-12 12:00:00', NULL, NULL),
+
+(4, 4, 1, 3.25, '2025-11-12 12:00:00', NULL, 1),
+(4, 4, 1, 3.25, '2025-11-12 12:00:00', NULL, NULL),
+
+(5, 5, 1, 4.20, '2025-11-13 12:00:00', NULL, NULL),
+
+(6, 6, 1, 7.50, '2025-11-14 12:00:00', NULL, 1),
+
+(7, 7, 1, 2.50, '2025-11-14 12:00:00', NULL, NULL),
+
+(8, 8, 1, 5.00, '2025-11-15 12:00:00', NULL, 1);
