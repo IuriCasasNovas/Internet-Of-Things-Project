@@ -3,7 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const verMaisBtn = document.querySelector("#ver-mais button");
 
   if (!tabelaBody || !verMaisBtn) {
-    console.error("Erro: Elementos da tabela ou botão 'Ver mais' não encontrados.");
+    console.error(
+      "Erro: Elementos da tabela ou botão 'Ver mais' não encontrados."
+    );
     return;
   }
 
@@ -11,10 +13,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const mostrarInicial = 5;
   let verMaisClicado = false;
 
+  // Chamar a função para carregar os dados inicialmente
+  atualizarTabela();
+
+  verMaisBtn.addEventListener("click", () => {
+    verMaisClicado = true;
+    preencherTabela(todasValidacoes);
+  });
+
   async function atualizarTabela() {
     try {
       console.log("Carregando dados da API...");
-      const resposta = await fetch(`http://localhost:3000/api/get_validacoes.php?timestamp=${Date.now()}`);
+      const resposta = await fetch(
+        `http://localhost:3000/api/get_validacoes.php?timestamp=${Date.now()}`
+      );
 
       if (!resposta.ok) {
         throw new Error(`Erro na API: ${resposta.status}`);
@@ -43,7 +55,9 @@ document.addEventListener("DOMContentLoaded", () => {
     linhas.forEach((row) => {
       const tr = document.createElement("tr");
       const estadoClass =
-        row.Resultado.toLowerCase() === "valido" ? "estado válido" : "estado inválido";
+        row.Resultado.toLowerCase() === "valido"
+          ? "estado válido"
+          : "estado inválido";
 
       tr.innerHTML = `
         <td>${row.Nome}</td>
@@ -54,11 +68,19 @@ document.addEventListener("DOMContentLoaded", () => {
       tabelaBody.appendChild(tr);
     });
   }
-}
 
+  // Abre/fecha o menu lateral no mobile
+  const menuBtn = document.getElementById("menuBtn"); // Botão para abrir menu
+  if (menuBtn) {
+    menuBtn.addEventListener("click", toggleMenu);
+  }
 
-// Abre/fecha o menu lateral no mobile
-function toggleMenu() {
+  function toggleMenu() {
     const menu = document.getElementById("mobileMenu");
     menu.classList.toggle("open");
-}
+  }
+
+  setInterval(() => {
+    atualizarTabela();
+  }, 2500);
+});
