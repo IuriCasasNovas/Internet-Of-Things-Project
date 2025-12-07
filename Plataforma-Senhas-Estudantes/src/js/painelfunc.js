@@ -54,17 +54,11 @@ document.addEventListener("DOMContentLoaded", () => {
       tabelaBody.appendChild(tr);
     });
   }
+}
 
-  verMaisBtn.addEventListener("click", () => {
-    console.log("Botão 'Ver mais' clicado");
-    verMaisClicado = true;
-    preencherTabela(todasValidacoes);
-    verMaisBtn.parentElement.style.display = "none";
-  });
 
-  // Atualiza a tabela a cada 5 segundos
-  setInterval(atualizarTabela, 2500);
-
-  // Carrega os dados inicialmente
-  atualizarTabela();
-});
+// Abre/fecha o menu lateral no mobile
+function toggleMenu() {
+    const menu = document.getElementById("mobileMenu");
+    menu.classList.toggle("open");
+}
