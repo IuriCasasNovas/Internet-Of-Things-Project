@@ -1,10 +1,9 @@
 <?php
-
-$host = '127.0.0.1';
-$port = '8889'; // porta do MySQL do MAMP
-$db   = 'inforSenhasIuri';
+$host = '127.0.0.1'; 
+$db   = 'InforSenhas';
 $user = 'root';
-$pass = 'root';
+$pass = 'root';     
+$port = 3306;       
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=$charset";
@@ -18,8 +17,6 @@ $options = [
 try {
     $pdo = new PDO($dsn, $user, $pass, $options);
 } catch (\PDOException $e) {
-    http_response_code(500);
-    echo json_encode(['message' => 'Erro de conexão MAMP: ' . $e->getMessage()]);
-    exit;
+    throw new \PDOException($e->getMessage(), (int)$e->getCode());
 }
 ?>

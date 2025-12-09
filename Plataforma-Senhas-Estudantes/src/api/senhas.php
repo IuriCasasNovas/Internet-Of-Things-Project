@@ -14,10 +14,10 @@ try {
     
     $sql = "SELECT COUNT(s.Id_Senha) AS quantidade 
             FROM Senha AS s 
-            JOIN Estado AS e ON s.Estado = e.Id_Estado 
+            JOIN Estado_Senha AS es ON s.Estado_Senha = es.Id_Estado_Senha 
             JOIN Compra AS c ON s.Compra = c.Id_Compra 
             JOIN Aluno AS a ON c.Aluno = a.Id_Aluno 
-            WHERE a.Pessoa = ? AND e.Estado = 'Ativo'";
+            WHERE a.Pessoa = ? AND es.Estado = 'Disponivel'";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$pessoaId]);

@@ -27,7 +27,12 @@ try {
 
     $stmt = $pdo->prepare("
         SELECT Id_Aluno, 
-        (SELECT COUNT(*) FROM Senha s JOIN Compra c ON s.Compra = c.Id_Compra WHERE c.Aluno = Aluno.Id_Aluno AND s.Estado = (SELECT Id_Estado FROM Estado WHERE Estado='Ativo')) as Total
+        (SELECT COUNT(*) 
+         FROM Senha s 
+         JOIN Compra c ON s.Compra = c.Id_Compra 
+         WHERE c.Aluno = Aluno.Id_Aluno 
+         AND s.Estado_Senha = (SELECT Id_Estado_Senha FROM Estado_Senha WHERE Estado='Disponivel')
+        ) as Total
         FROM Aluno WHERE Pessoa = ?");
     $stmt->execute([$user['id']]);
     $aluno = $stmt->fetch();
@@ -41,11 +46,14 @@ try {
     $pdo->prepare($sql)->execute([$aluno['Id_Aluno'], $valorTotal, $metodosValidos[$metodo]]);
     $idCompra = $pdo->lastInsertId();
 
-    $idEstado = $pdo->query("SELECT Id_Estado FROM Estado WHERE Estado = 'Ativo'")->fetchColumn() ?: 1;
+    $stmtEstado = $pdo->query("SELECT Id_Estado_Senha FROM Estado_Senha WHERE Estado = 'Disponivel'");
+    $idEstadoSenha = $stmtEstado->fetchColumn() ?: 1;
 
-    $stmtSenha = $pdo->prepare("INSERT INTO Senha (Compra, Estado, Preco_Senha, Data_Validade_Senha) VALUES (?, ?, 2.90, DATE_ADD(NOW(), INTERVAL 1 YEAR))");
+    $stmtSenha = $pdo->prepare("INSERT INTO Senha (Compra, Estado_Senha, Preco_Senha, Data_Validade_Senha) VALUES (?, ?, 2.90, DATE_ADD(NOW(), INTERVAL 1 YEAR))");
     
-    for ($i = 0; $i < $qtd; $i++) $stmtSenha->execute([$idCompra, $idEstado]);
+    for ($i = 0; $i < $qtd; $i++) {
+        $stmtSenha->execute([$idCompra, $idEstadoSenha]);
+    }
 
     $pdo->commit();
 
@@ -77,7 +85,7 @@ function enviarEmail($email, $nome, $idCompra, $qtd, $total, $dados) {
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
         $mail->Username = 'inforsenhas.oficial@gmail.com';
-        $mail->Password = 'rzif kots bnjf geag';
+        $mail->Password = 'waja zuwc vtht iafm';
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
         $mail->CharSet = 'UTF-8';

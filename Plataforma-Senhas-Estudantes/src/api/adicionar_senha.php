@@ -15,12 +15,11 @@ if (!$idAluno || $quantidade <= 0) {
 try {
     $pdo->beginTransaction();
 
-    $stmtEstado = $pdo->prepare("SELECT Id_Estado FROM Estado WHERE Estado = 'Ativo' LIMIT 1");
+    $stmtEstado = $pdo->prepare("SELECT Id_Estado_Senha FROM Estado_Senha WHERE Estado = 'Disponivel' LIMIT 1");
     $stmtEstado->execute();
     $estado = $stmtEstado->fetch(PDO::FETCH_ASSOC);
-    $idEstadoAtivo = $estado['Id_Estado'] ?? 1;
+    $idEstadoSenha = $estado['Id_Estado_Senha'] ?? 1;
 
-    // 2. Criar a COMPRA
     $valorTotal = $quantidade * $precoUnitario;
     $sqlCompra = "INSERT INTO Compra (Aluno, Valor_Total_Compra, Metodo_Pagamento_Compra, Data_Hora_Compra) 
                   VALUES (:aluno, :valor, 'Numerário', NOW())";
@@ -29,8 +28,8 @@ try {
     
     $idCompra = $pdo->lastInsertId(); 
 
-    $sqlSenha = "INSERT INTO Senha (Compra, Estado, Preco_Senha, Data_Validade_Senha) 
-                 VALUES (:compra, :estado, :preco, :validade)";
+    $sqlSenha = "INSERT INTO Senha (Compra, Estado_Senha, Preco_Senha, Data_Validade_Senha) 
+                  VALUES (:compra, :estado, :preco, :validade)";
     $stmtSenha = $pdo->prepare($sqlSenha);
 
     $validade = date('Y-m-d H:i:s', strtotime('+1 year'));
@@ -38,7 +37,7 @@ try {
     for ($i = 0; $i < $quantidade; $i++) {
         $stmtSenha->execute([
             ':compra' => $idCompra,
-            ':estado' => $idEstadoAtivo,
+            ':estado' => $idEstadoSenha,
             ':preco'  => $precoUnitario,
             ':validade' => $validade
         ]);

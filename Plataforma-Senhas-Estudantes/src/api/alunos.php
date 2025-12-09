@@ -19,16 +19,17 @@ try {
             P.Foto_Pessoa,
             A.Numero_Aluno,
             A.Curso_Aluno,
-            E.Estado AS Estado,
+            E.Estado AS estado_cartao, -- Alias alterado para corresponder ao teu JS
             (
                 SELECT COUNT(S.Id_Senha) 
                 FROM Compra C
                 JOIN Senha S ON S.Compra = C.Id_Compra
-                WHERE C.Aluno = A.Id_Aluno
+                JOIN Estado_Senha ES ON S.Estado_Senha = ES.Id_Estado_Senha
+                WHERE C.Aluno = A.Id_Aluno AND ES.Estado = 'Disponivel'
             ) AS Total_Senhas
         FROM Aluno A
         JOIN Pessoa P ON A.Pessoa = P.Id_Pessoa
-        JOIN Estado E ON A.Estado = E.Id_Estado
+        JOIN Estado_Cartao E ON A.Estado_Cartao = E.Id_Estado_Cartao -- Tabela e coluna atualizadas
     ";
 
     if ($busca) {
