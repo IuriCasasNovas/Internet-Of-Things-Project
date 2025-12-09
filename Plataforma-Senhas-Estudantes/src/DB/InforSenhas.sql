@@ -14,7 +14,6 @@ DROP TABLE IF EXISTS Estado_Cartao;
 DROP TABLE IF EXISTS Estado;
 DROP TABLE IF EXISTS Pessoa;
 
-
 CREATE TABLE Pessoa (
     Id_Pessoa INT AUTO_INCREMENT PRIMARY KEY,
     Nome_Pessoa VARCHAR(255) NOT NULL,
@@ -61,6 +60,7 @@ ALTER TABLE Aluno ADD CONSTRAINT fk_aluno_estado FOREIGN KEY (Estado_Cartao) REF
 
 CREATE TABLE Auxiliar (
     Id_Auxiliar INT AUTO_INCREMENT PRIMARY KEY,
+    Turno INT,
     Pessoa INT NOT NULL,
     Data_Contratacao_Auxiliar DATE
 );
@@ -96,22 +96,27 @@ CREATE TABLE Senha (
 ALTER TABLE Senha ADD CONSTRAINT fk_senha_compra FOREIGN KEY (Compra) REFERENCES Compra(Id_Compra);
 ALTER TABLE Senha ADD CONSTRAINT fk_senha_estado FOREIGN KEY (Estado_Senha) REFERENCES Estado_Senha(Id_Estado_Senha);
 ALTER TABLE Senha ADD CONSTRAINT fk_senha_auxiliar FOREIGN KEY (Auxiliar) REFERENCES Auxiliar(Id_Auxiliar);
+ALTER TABLE Senha
+ADD COLUMN Aluno INT NULL AFTER Compra,
+ADD CONSTRAINT fk_senha_aluno FOREIGN KEY (Aluno) REFERENCES Aluno(Id_Aluno);
+
 
 CREATE TABLE Validacao (
     Id_Validacao INT AUTO_INCREMENT PRIMARY KEY,
     Cartao INT NOT NULL,
-    Senha INT NOT NULL,
+    Senha INT  NULL,
     Auxiliar INT NOT NULL,
     Resultado_Validacao ENUM('Valido','Invalido') NOT NULL,
     Data_Hora_Validacao DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 ALTER TABLE Validacao ADD CONSTRAINT fk_validacao_cartao FOREIGN KEY (Cartao) REFERENCES Cartao(Id_Cartao);
-ALTER TABLE Validacao ADD CONSTRAINT fk_validacao_aluno FOREIGN KEY (Aluno) REFERENCES Aluno(Id_Aluno);
+ALTER TABLE Validacao ADD CONSTRAINT fk_validacao_senha FOREIGN KEY (Senha) REFERENCES Senha(Id_Senha);
+ALTER TABLE Validacao ADD CONSTRAINT fk_validacao_auxiliar FOREIGN KEY (Auxiliar) REFERENCES Auxiliar(Id_Auxiliar);
 
 CREATE TABLE Turno_Auxiliar (
     Id_auxiliar INT,
     Id_turno INT,
-    PRIMARY KEY (id_auxiliar, id_turno)
+    PRIMARY KEY (Id_auxiliar, Id_turno)
 );
 ALTER TABLE Turno_Auxiliar ADD CONSTRAINT fk_turno_auxiliar_auxiliar FOREIGN KEY (id_auxiliar) REFERENCES Auxiliar(Id_Auxiliar);
 ALTER TABLE Turno_Auxiliar ADD CONSTRAINT fk_turno_auxiliar_turno FOREIGN KEY (id_turno) REFERENCES Turno(Id_Turno);
