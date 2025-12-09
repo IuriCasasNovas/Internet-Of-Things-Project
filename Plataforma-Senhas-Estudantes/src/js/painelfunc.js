@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
           : "estado inválido";
 
       tr.innerHTML = `
-        <td>${row.Nome}</td>
+        <td>${row.Nome_Aluno}</td>
         <td>${row.Numero_Aluno}</td>
         <td><span class="${estadoClass}">${row.Resultado}</span></td>
         <td>${row.Data_Hora}</td>

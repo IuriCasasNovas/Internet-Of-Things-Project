@@ -30,19 +30,20 @@ try {
         SELECT Id_Aluno, 
         (SELECT COUNT(*) 
          FROM Senha s 
-         JOIN Compra c ON s.Compra = c.Id_Compra 
-         WHERE c.Aluno = Aluno.Id_Aluno 
+         WHERE s.Aluno = Aluno.Id_Aluno 
          AND s.Estado_Senha = (SELECT Id_Estado_Senha FROM Estado_Senha WHERE Estado='Disponivel')
         ) as Total
-        FROM Aluno WHERE Pessoa = ?");
+        FROM Aluno 
+        WHERE Pessoa = ?
+    ");
     $stmt->execute([$user['id']]);
     $aluno = $stmt->fetch();
 
     if (!$aluno) throw new Exception("Aluno não encontrado.");
     if (($aluno['Total'] + $qtd) > 30) throw new Exception("Limite de carteira excedido.");
 
-    // Buscar cartão do aluno
-    $stmtCartao = $pdo->prepare("SELECT Id_Cartao FROM Cartao WHERE Aluno = ? AND Estado = 1 LIMIT 1");
+    // Buscar cartão ativo do aluno
+    $stmtCartao = $pdo->prepare("SELECT Id_Cartao FROM Cartao WHERE Aluno = ? AND Estado_Cartao = 1 LIMIT 1");
     $stmtCartao->execute([$aluno['Id_Aluno']]);
     $idCartao = $stmtCartao->fetchColumn();
 
@@ -50,29 +51,28 @@ try {
 
     // Criar compra
     $valorTotal = $qtd * 2.90;
-
     $sql = "INSERT INTO Compra (Aluno, Valor_Total_Compra, Metodo_Pagamento_Compra, Data_Hora_Compra)
             VALUES (?, ?, ?, NOW())";
     $pdo->prepare($sql)->execute([$aluno['Id_Aluno'], $valorTotal, $metodosValidos[$metodo]]);
     $idCompra = $pdo->lastInsertId();
 
+    // Obter estado 'Disponivel' para senhas
     $stmtEstado = $pdo->query("SELECT Id_Estado_Senha FROM Estado_Senha WHERE Estado = 'Disponivel'");
     $idEstadoSenha = $stmtEstado->fetchColumn() ?: 1;
 
-    $stmtSenha = $pdo->prepare("INSERT INTO Senha (Compra, Estado_Senha, Preco_Senha, Data_Validade_Senha) VALUES (?, ?, 2.90, DATE_ADD(NOW(), INTERVAL 1 YEAR))");
-    
-    for ($i = 0; $i < $qtd; $i++) {
-        $stmtSenha->execute([$idCompra, $idEstadoSenha]);
-    }
+    // Inserir senhas vinculadas ao aluno e à compra
+    $stmtSenha = $pdo->prepare("
+        INSERT INTO Senha (Compra, Estado_Senha, Preco_Senha, Data_Validade_Senha, Aluno)
+        VALUES (?, ?, 2.90, DATE_ADD(NOW(), INTERVAL 1 YEAR), ?)
+    ");
 
     for ($i = 0; $i < $qtd; $i++) {
-        $stmtSenha->execute([$idCompra, $idCartao, $idEstado]);
+        $stmtSenha->execute([$idCompra, $idEstadoSenha, $aluno['Id_Aluno']]);
     }
 
-    // Commit
     $pdo->commit();
 
-    // Resposta
+    // Preparar resposta
     $res = [
         'success' => true,
         'message' => 'Compra efetuada!',
@@ -81,9 +81,9 @@ try {
 
     if ($metodo === 'multibanco') {
         $res += [
-            'entidade'  => 21223,
-            'referencia'=> rand(100000000, 999999999),
-            'valor'     => number_format($valorTotal, 2)
+            'entidade'   => 21223,
+            'referencia' => rand(100000000, 999999999),
+            'valor'      => number_format($valorTotal, 2)
         ];
     }
 
@@ -106,13 +106,13 @@ function enviarEmail($email, $nome, $idCompra, $qtd, $total, $dados) {
     $mail = new PHPMailer(true);
     try {
         $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'inforsenhas.oficial@gmail.com';
-        $mail->Password = 'waja zuwc vtht iafm';
+        $mail->Host       = 'smtp.gmail.com';
+        $mail->SMTPAuth   = true;
+        $mail->Username   = 'inforsenhas.oficial@gmail.com';
+        $mail->Password   = 'waja zuwc vtht iafm';
         $mail->SMTPSecure = 'tls';
-        $mail->Port = 587;
-        $mail->CharSet = 'UTF-8';
+        $mail->Port       = 587;
+        $mail->CharSet    = 'UTF-8';
 
         $mail->setFrom('inforsenhas.oficial@gmail.com', 'InforSenhas');
         $mail->addAddress($email, $nome);
@@ -121,7 +121,7 @@ function enviarEmail($email, $nome, $idCompra, $qtd, $total, $dados) {
 
         $extra = ($dados['metodo'] === 'multibanco') ? 
             "<br><strong>Dados MB:</strong> Ent: {$dados['entidade']} | Ref: {$dados['referencia']}" : "";
-        
+
         $mail->Body = "
             <div style='font-family:sans-serif; padding:20px; border:1px solid #ddd;'>
                 <h2 style='color:#00b894'>Compra Confirmada</h2>
@@ -137,6 +137,8 @@ function enviarEmail($email, $nome, $idCompra, $qtd, $total, $dados) {
             </div>";
 
         $mail->send();
-    } catch (Exception $e) { error_log("Mail Error: {$mail->ErrorInfo}"); }
+    } catch (Exception $e) {
+        error_log("Mail Error: {$mail->ErrorInfo}");
+    }
 }
 ?>
