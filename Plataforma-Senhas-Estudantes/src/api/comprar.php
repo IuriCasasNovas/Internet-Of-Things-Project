@@ -25,6 +25,7 @@ if ($metodo === 'mbway' && !preg_match('/^9\d{8}$/', $tel)) json_out(400, 'Telem
 try {
     $pdo->beginTransaction();
 
+    // Obter aluno + total de senhas ativas
     $stmt = $pdo->prepare("
         SELECT Id_Aluno, 
         (SELECT COUNT(*) 
@@ -40,9 +41,18 @@ try {
     if (!$aluno) throw new Exception("Aluno não encontrado.");
     if (($aluno['Total'] + $qtd) > 30) throw new Exception("Limite de carteira excedido.");
 
+    // Buscar cartão do aluno
+    $stmtCartao = $pdo->prepare("SELECT Id_Cartao FROM Cartao WHERE Aluno = ? AND Estado = 1 LIMIT 1");
+    $stmtCartao->execute([$aluno['Id_Aluno']]);
+    $idCartao = $stmtCartao->fetchColumn();
+
+    if (!$idCartao) throw new Exception("Nenhum cartão ativo associado ao aluno.");
+
+    // Criar compra
     $valorTotal = $qtd * 2.90;
 
-    $sql = "INSERT INTO Compra (Aluno, Valor_Total_Compra, Metodo_Pagamento_Compra, Data_Hora_Compra) VALUES (?, ?, ?, NOW())";
+    $sql = "INSERT INTO Compra (Aluno, Valor_Total_Compra, Metodo_Pagamento_Compra, Data_Hora_Compra)
+            VALUES (?, ?, ?, NOW())";
     $pdo->prepare($sql)->execute([$aluno['Id_Aluno'], $valorTotal, $metodosValidos[$metodo]]);
     $idCompra = $pdo->lastInsertId();
 
@@ -55,12 +65,26 @@ try {
         $stmtSenha->execute([$idCompra, $idEstadoSenha]);
     }
 
+    for ($i = 0; $i < $qtd; $i++) {
+        $stmtSenha->execute([$idCompra, $idCartao, $idEstado]);
+    }
+
+    // Commit
     $pdo->commit();
 
-    $res = ['success' => true, 'message' => 'Compra efetuada!', 'metodo' => $metodo];
-    
+    // Resposta
+    $res = [
+        'success' => true,
+        'message' => 'Compra efetuada!',
+        'metodo'  => $metodo
+    ];
+
     if ($metodo === 'multibanco') {
-        $res += ['entidade' => 21223, 'referencia' => rand(100000000, 999999999), 'valor' => number_format($valorTotal, 2)];
+        $res += [
+            'entidade'  => 21223,
+            'referencia'=> rand(100000000, 999999999),
+            'valor'     => number_format($valorTotal, 2)
+        ];
     }
 
     enviarEmail($user['email'], $user['nome'], $idCompra, $qtd, $valorTotal, $res);
