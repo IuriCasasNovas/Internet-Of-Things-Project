@@ -1,44 +1,39 @@
 <?php
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 require 'db.php';
 
 $input = json_decode(file_get_contents('php://input'), true);
 $idAluno = $input['id'] ?? null;
-$estadoAtual = $input['estado'] ?? null;
+$estadoStringAtual = $input['estado'] ?? null;
 
-if (!$idAluno || !$estadoAtual) {
+if (!$idAluno || !$estadoStringAtual) {
     echo json_encode(['sucesso' => false, 'erro' => 'Dados em falta']);
     exit;
 }
 
-// Converter texto → ID do estado
-if ($estadoAtual === 'Ativo') {
-    $novoEstadoTexto = 'Inativo';
-} else {
-    $novoEstadoTexto = 'Ativo';
-}
-
-// Obter ID do novo estado
-$stmt = $pdo->prepare("SELECT Id_Estado FROM Estado WHERE Estado = ?");
-$stmt->execute([$novoEstadoTexto]);
-$novoEstadoId = $stmt->fetchColumn();
-
-if (!$novoEstadoId) {
-    echo json_encode(['sucesso' => false, 'erro' => 'Estado inválido']);
-    exit;
-}
-
 try {
-    $sql = "UPDATE Aluno SET Estado = :novoEstado WHERE Id_Aluno = :id";
+    
+    $stmtEstados = $pdo->prepare("SELECT Id_Estado_Cartao, Estado FROM Estado_Cartao WHERE Estado IN ('Ativo', 'Inativo')");
+    $stmtEstados->execute();
+    $estados = $stmtEstados->fetchAll(PDO::FETCH_KEY_PAIR);
+
+    $idAtivo = $estados['Ativo'] ?? 1;
+    $idInativo = $estados['Inativo'] ?? 2;
+
+    if ($estadoStringAtual === 'Ativo') {
+        $novoIdEstado = $idInativo;
+        $novoTextoEstado = 'Inativo';
+    } else {
+        $novoIdEstado = $idAtivo;
+        $novoTextoEstado = 'Ativo';
+    }
+    $sql = "UPDATE Aluno SET Estado_Cartao = :novoIdEstado WHERE Id_Aluno = :id";
     $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':novoEstado', $novoEstadoId, PDO::PARAM_INT);
+    $stmt->bindParam(':novoIdEstado', $novoIdEstado, PDO::PARAM_INT);
     $stmt->bindParam(':id', $idAluno, PDO::PARAM_INT);
     $stmt->execute();
 
-    echo json_encode([
-        'sucesso' => true,
-        'novo_estado' => $novoEstadoTexto
-    ]);
+    echo json_encode(['sucesso' => true, 'novo_estado' => $novoTextoEstado]);
 
 } catch (PDOException $e) {
     echo json_encode(['sucesso' => false, 'erro' => $e->getMessage()]);

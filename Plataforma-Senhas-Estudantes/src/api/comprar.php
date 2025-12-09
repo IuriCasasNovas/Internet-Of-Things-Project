@@ -28,14 +28,13 @@ try {
     // Obter aluno + total de senhas ativas
     $stmt = $pdo->prepare("
         SELECT Id_Aluno, 
-        (SELECT COUNT(*) FROM Senha s 
+        (SELECT COUNT(*) 
+         FROM Senha s 
          JOIN Compra c ON s.Compra = c.Id_Compra 
          WHERE c.Aluno = Aluno.Id_Aluno 
-         AND s.Estado = (SELECT Id_Estado FROM Estado WHERE Estado='Ativo')
+         AND s.Estado_Senha = (SELECT Id_Estado_Senha FROM Estado_Senha WHERE Estado='Disponivel')
         ) as Total
-        FROM Aluno 
-        WHERE Pessoa = ?
-    ");
+        FROM Aluno WHERE Pessoa = ?");
     $stmt->execute([$user['id']]);
     $aluno = $stmt->fetch();
 
@@ -57,14 +56,14 @@ try {
     $pdo->prepare($sql)->execute([$aluno['Id_Aluno'], $valorTotal, $metodosValidos[$metodo]]);
     $idCompra = $pdo->lastInsertId();
 
-    // Estado Ativo
-    $idEstado = $pdo->query("SELECT Id_Estado FROM Estado WHERE Estado = 'Ativo'")->fetchColumn() ?: 1;
+    $stmtEstado = $pdo->query("SELECT Id_Estado_Senha FROM Estado_Senha WHERE Estado = 'Disponivel'");
+    $idEstadoSenha = $stmtEstado->fetchColumn() ?: 1;
 
-    // Criar senhas (agora com Cartao incluído)
-    $stmtSenha = $pdo->prepare("
-        INSERT INTO Senha (Compra, Cartao, Estado, Preco_Senha, Data_Validade_Senha)
-        VALUES (?, ?, ?, 2.90, DATE_ADD(NOW(), INTERVAL 1 YEAR))
-    ");
+    $stmtSenha = $pdo->prepare("INSERT INTO Senha (Compra, Estado_Senha, Preco_Senha, Data_Validade_Senha) VALUES (?, ?, 2.90, DATE_ADD(NOW(), INTERVAL 1 YEAR))");
+    
+    for ($i = 0; $i < $qtd; $i++) {
+        $stmtSenha->execute([$idCompra, $idEstadoSenha]);
+    }
 
     for ($i = 0; $i < $qtd; $i++) {
         $stmtSenha->execute([$idCompra, $idCartao, $idEstado]);
@@ -95,5 +94,49 @@ try {
 } catch (Exception $e) {
     if ($pdo->inTransaction()) $pdo->rollBack();
     json_out(500, $e->getMessage());
+}
+
+function json_out($code, $msg) {
+    http_response_code($code);
+    echo json_encode(['message' => $msg]);
+    exit;
+}
+
+function enviarEmail($email, $nome, $idCompra, $qtd, $total, $dados) {
+    $mail = new PHPMailer(true);
+    try {
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'inforsenhas.oficial@gmail.com';
+        $mail->Password = 'waja zuwc vtht iafm';
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
+        $mail->CharSet = 'UTF-8';
+
+        $mail->setFrom('inforsenhas.oficial@gmail.com', 'InforSenhas');
+        $mail->addAddress($email, $nome);
+        $mail->isHTML(true);
+        $mail->Subject = "Recibo de Compra #$idCompra";
+
+        $extra = ($dados['metodo'] === 'multibanco') ? 
+            "<br><strong>Dados MB:</strong> Ent: {$dados['entidade']} | Ref: {$dados['referencia']}" : "";
+        
+        $mail->Body = "
+            <div style='font-family:sans-serif; padding:20px; border:1px solid #ddd;'>
+                <h2 style='color:#00b894'>Compra Confirmada</h2>
+                <p>Olá <b>$nome</b>, obrigado pela tua compra.</p>
+                <ul>
+                    <li>Ref: #$idCompra</li>
+                    <li>Qtd: $qtd Senhas</li>
+                    <li>Total: " . number_format($total, 2) . "€</li>
+                    <li>Método: {$dados['metodo']}</li>
+                </ul>
+                $extra
+                <p style='font-size:12px; color:#777'>InforSenhas Automático</p>
+            </div>";
+
+        $mail->send();
+    } catch (Exception $e) { error_log("Mail Error: {$mail->ErrorInfo}"); }
 }
 ?>

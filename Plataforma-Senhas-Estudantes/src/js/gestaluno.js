@@ -193,8 +193,8 @@ async function carregarAlunos(busca = '') {
         }
 
         alunos.forEach(aluno => {
-            const isAtivo = aluno.Estado === 'Ativo';
-            const corEstado = isAtivo ? '#00c851' : '#ff4444';
+            const isAtivo = aluno.estado_cartao === 'Ativo';
+            const corestado = isAtivo ? '#00c851' : '#ff4444';
             const textoBotao = isAtivo ? 'Bloquear' : 'Desbloquear';
 
             const linha = `
@@ -203,12 +203,12 @@ async function carregarAlunos(busca = '') {
                     <td>${aluno.Numero_Aluno}</td>
                     <td>${aluno.Curso_Aluno || 'N/A'}</td>
                     <td>
-                        <span style="color: ${corEstado}; font-size: 1.2em;">●</span> 
-                        ${aluno.Estado}
+                        <span style="color: ${corestado}; font-size: 1.2em;">●</span> 
+                        ${aluno.estado_cartao}
                     </td>
                     <td>${aluno.Total_Senhas}</td>
                     <td>
-                        <button class="btn-bloquear" onclick="alterarEstado(${aluno.Id_Aluno}, '${aluno.Estado}')">
+                        <button class="btn-bloquear" onclick="alterarestado(${aluno.Id_Aluno}, '${aluno.estado_cartao}')">
                             ${textoBotao}
                         </button>
                     </td>
@@ -223,7 +223,7 @@ async function carregarAlunos(busca = '') {
     }
 }
 
-async function alterarEstado(id, estadoAtual) {
+async function alterarestado(id, estadoAtual) {
     const acao = estadoAtual === 'Ativo' ? 'bloquear' : 'desbloquear';
     if (!confirm(`Tens a certeza que queres ${acao} este aluno?`)) return;
 
@@ -237,11 +237,7 @@ async function alterarEstado(id, estadoAtual) {
         const resultado = await response.json();
 
         if (resultado.sucesso) {
-            // 3. Se funcionou, recarrega a tabela para atualizar a cor e o botão
             carregarAlunos(); 
-            // Se tiveres um input de pesquisa com texto, podes querer passar o valor aqui:
-            // const busca = document.querySelector('input[type="search"]').value;
-            // carregarAlunos(busca);
         } else {
             alert('Erro: ' + (resultado.erro || 'Falha desconhecida'));
         }
@@ -252,7 +248,6 @@ async function alterarEstado(id, estadoAtual) {
     }
 }
 
-// 1. Função para Abrir o Modal e Preencher a Lista de Alunos
 async function abrirModalSenhas() {
     const modal = document.getElementById('modal-senhas');
     const select = document.getElementById('select-aluno-senhas');
@@ -266,7 +261,7 @@ async function abrirModalSenhas() {
         select.innerHTML = '<option value="">Selecione um aluno...</option>';
         
         alunos.forEach(aluno => {
-            if(aluno.Estado === 'Ativo') {
+            if(aluno.estado_cartao === 'Ativo') {
                 const option = document.createElement('option');
                 option.value = aluno.Id_Aluno;
                 option.textContent = `${aluno.Nome_Pessoa} (${aluno.Numero_Aluno})`;
@@ -279,7 +274,6 @@ async function abrirModalSenhas() {
     }
 }
 
-// 2. Função para Enviar a Compra ao PHP
 async function confirmarAdicaoSenhas() {
     const idAluno = document.getElementById('select-aluno-senhas').value;
     const qtd = document.getElementById('qtd-senhas').value;
