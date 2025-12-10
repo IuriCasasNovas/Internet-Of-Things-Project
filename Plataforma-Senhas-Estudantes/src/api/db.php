@@ -1,4 +1,8 @@
 <?php
+
+date_default_timezone_set('Europe/Lisbon');
+
+
 $host = '127.0.0.1'; 
 $db   = 'InforSenhas';
 $user = 'root';
@@ -16,7 +20,11 @@ $options = [
 
 try {
     $pdo = new PDO($dsn, $user, $pass, $options);
+    $offset = date('P');
+    $pdo->exec("SET time_zone = '$offset';");
+
 } catch (\PDOException $e) {
-    throw new \PDOException($e->getMessage(), (int)$e->getCode());
+    die("Erro de Conexão com a Base de Dados: " . $e->getMessage() . 
+        "<br>Verifica se o MAMP está ligado e se a porta ($port) está correta.");
 }
 ?>
