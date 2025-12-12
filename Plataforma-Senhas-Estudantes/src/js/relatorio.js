@@ -39,6 +39,20 @@ function updateUI(user) {
     }
 }
 
+async function handleLogout() {
+    try {
+        const response = await fetch('../api/logout.php', { method: 'POST' });
+        const data = await response.json();
+
+        if (response.ok) {
+            console.log('Logout bem-sucedido. Redirecionando...');
+            window.location.href = data.redirectTo;
+        }
+    } catch (error) {
+        console.error('Erro ao fazer logout:', error);
+    }
+}
+
 async function uploadProfilePic(file) {
     const formData = new FormData();
     formData.append('profilePic', file);
@@ -67,6 +81,8 @@ async function uploadProfilePic(file) {
 
 function attachEventListeners() {
     const profilePic = document.getElementById('profile-pic');
+    const logoutButton = document.getElementById('logout-button');
+    const footerLogout = document.getElementById('footer-logout');
     const uploadModal = document.getElementById('upload-modal');
     const confirmModal = document.getElementById('confirm-modal');
     const fileInput = document.getElementById('file-input');
@@ -74,8 +90,22 @@ function attachEventListeners() {
     const confirmUploadBtn = document.getElementById('confirm-upload');
     const cancelUpload1Btn = document.getElementById('cancel-upload-1');
     const cancelUpload2Btn = document.getElementById('cancel-upload-2');
+    const inputPesquisa = document.querySelector('input[type="search"]') || document.getElementById('inputPesquisa');
 
-    
+    if (inputPesquisa) {
+        inputPesquisa.addEventListener('keyup', (e) => {
+            carregarAlunos(e.target.value);
+        });
+    }
+
+    if (logoutButton) logoutButton.addEventListener('click', handleLogout);
+    if (footerLogout) {
+        footerLogout.addEventListener('click', (e) => {
+            e.preventDefault();
+            handleLogout();
+        });
+    }
+
     if (profilePic) {
         profilePic.style.cursor = 'pointer';
         profilePic.addEventListener('click', () => {
@@ -139,90 +169,69 @@ async function initDashboard() {
 }
 
 document.addEventListener('DOMContentLoaded', initDashboard);
+document.addEventListener('DOMContentLoaded', () => {
+    if(typeof initDashboard === 'function') initDashboard();
 
-document.addEventListener("DOMContentLoaded", () => {
-  const tabelaBody = document.querySelector("table tbody");
-  const verMaisBtn = document.querySelector("#ver-mais button");
-
-  if (!tabelaBody || !verMaisBtn) {
-    console.error(
-      "Erro: Elementos da tabela ou botão 'Ver mais' não encontrados."
-    );
-    return;
-  }
-
-  let todasValidacoes = [];
-  const mostrarInicial = 5;
-  let verMaisClicado = false;
-
-  // Chamar a função para carregar os dados inicialmente
-  atualizarTabela();
-
-  verMaisBtn.addEventListener("click", () => {
-    verMaisClicado = true;
-    preencherTabela(todasValidacoes);
-  });
-
-  async function atualizarTabela() {
-    try {
-      console.log("Carregando dados da API...");
-      const resposta = await fetch(
-        `http://localhost:3000/api/get_validacoes.php?timestamp=${Date.now()}`
-      );
-
-      if (!resposta.ok) {
-        throw new Error(`Erro na API: ${resposta.status}`);
-      }
-
-      const dados = await resposta.json();
-      console.log("Dados recebidos:", dados);
-
-      todasValidacoes = dados;
-
-      if (!verMaisClicado) {
-        preencherTabela(todasValidacoes.slice(0, mostrarInicial));
-      } else {
-        preencherTabela(todasValidacoes);
-      }
-    } catch (e) {
-      console.error("Erro ao carregar dados:", e);
-    }
-  }
-
-  function preencherTabela(linhas) {
-    console.log("Preenchendo tabela com linhas:", linhas);
-
-    tabelaBody.innerHTML = "";
-
-    linhas.forEach((row) => {
-      const tr = document.createElement("tr");
-      const estadoClass =
-        row.Resultado.toLowerCase() === "valido"
-          ? "estado válido"
-          : "estado inválido";
-
-      tr.innerHTML = `
-        <td>${row.Nome_Aluno}</td>
-        <td>${row.Numero_Aluno}</td>
-        <td><span class="${estadoClass}">${row.Resultado}</span></td>
-        <td>${row.Data_Hora}</td>
-      `;
-      tabelaBody.appendChild(tr);
-    });
-  }
-
-  // Abre/fecha o menu lateral no mobile
-  const menuBtn = document.getElementById("menuBtn"); // Botão para abrir menu
-  if (menuBtn) {
-    menuBtn.addEventListener("click", toggleMenu);
-  }
-
-  function toggleMenu() {
-    const menu = document.getElementById("mobileMenu");
-    menu.classList.toggle("open");
-  }
-
-  setInterval(() => {
-    atualizarTabela();
-  }, 2500);
+    initFiltros(); 
+    
+    carregarRelatorio(); 
 });
+
+function initFiltros() {
+    const selMes = document.getElementById('filtro-mes');
+    const selAno = document.getElementById('filtro-ano');
+    
+    if(!selMes || !selAno) return;
+
+    const meses = ['Todos', 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+    meses.forEach((m, i) => selMes.add(new Option(m, i === 0 ? '' : i)));
+
+    const anoAtual = new Date().getFullYear();
+    selAno.add(new Option('Todos', ''));
+    for(let i=anoAtual; i>=anoAtual-5; i--) selAno.add(new Option(i, i));
+
+    selMes.addEventListener('change', carregarRelatorio);
+    selAno.addEventListener('change', carregarRelatorio);
+}
+
+async function carregarRelatorio() {
+    const mes = document.getElementById('filtro-mes').value;
+    const ano = document.getElementById('filtro-ano').value;
+    const tbody = document.getElementById('tabela-relatorio-corpo');
+    
+    if(tbody) tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">A carregar dados...</td></tr>';
+
+    try {
+        const res = await fetch(`../api/relatorio.php?mes=${mes}&ano=${ano}`);
+        const data = await res.json();
+        
+        if(data.sucesso) {
+            document.getElementById('rel-receita').textContent = parseFloat(data.resumo.receita_total).toFixed(2) + ' €';
+            document.getElementById('rel-qtd').textContent = data.resumo.total_senhas_vendidas;
+            
+            if(tbody) {
+                tbody.innerHTML = '';
+                if(data.historico.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">Sem vendas neste período.</td></tr>';
+                } else {
+                    data.historico.forEach(h => {
+                        const dataFormatada = new Date(h.Data_Hora_Compra).toLocaleDateString('pt-PT');
+                        tbody.innerHTML += `
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding:12px;">${dataFormatada}</td>
+                                <td style="padding:12px;">
+                                    <strong>${h.Nome_Pessoa}</strong><br>
+                                    <small style="color:#888">${h.Numero_Aluno}</small>
+                                </td>
+                                <td style="padding:12px;">${h.qtd_senhas}</td>
+                                <td style="padding:12px; color:green; font-weight:bold;">${h.Valor_Total_Compra} €</td>
+                            </tr>`;
+                    });
+                }
+            }
+        }
+    } catch(e) { 
+        console.error("Erro relatório:", e); 
+        if(tbody) tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:red">Erro ao carregar.</td></tr>';
+    }
+}

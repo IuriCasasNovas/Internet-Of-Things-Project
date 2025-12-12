@@ -7,7 +7,7 @@ $host = '127.0.0.1';
 $db   = 'InforSenhas';
 $user = 'root';
 $pass = 'root';     
-$port = 8889;       
+$port = 3306;       
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=$charset";
