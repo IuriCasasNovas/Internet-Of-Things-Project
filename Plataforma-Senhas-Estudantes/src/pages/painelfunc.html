@@ -17,9 +17,10 @@
           <img
             src="../img/FotoPerfilPedro.png"
             alt="Pedro Silva"
-            class="profile-img"
+            class="profile-pic"
+            id="profile-pic"
           />
-          <p class="username">Pedro Henrique de Oliveira Silva</p>
+          <p id="profile-name" class="username">Pedro Henrique de Oliveira Silva</p>
             <a href="login.html" class="logout-btn">Sair</a>
           <!-- <button class="logout-btn">Sair</button> -->
         </div>
@@ -62,6 +63,37 @@
         </div>
       </div>
     </main>
+
+    <!-- Modal: Upload -->
+    <div id="upload-modal" class="modal-overlay" style="display: none;">
+      <div class="modal-content">
+        <button id="cancel-upload-1" class="btn-cancelar primeiro">Voltar</button>
+        <h3>Alterar foto de perfil</h3>
+
+        <div class="image-upload">
+          <label for="file-input">
+            <img src="../img/imgCAM.png" class="camera-icon" />
+          </label>
+          <input type="file" id="file-input" accept="image/*" />
+        </div>
+
+        <p>Escolha uma imagem do seu computador.</p>
+      </div>
+    </div>
+
+    <!-- Modal: Confirm -->
+    <div id="confirm-modal" class="modal-overlay" style="display: none;">
+      <div class="modal-content">
+        <h3>Confirmar nova foto?</h3>
+        <img id="preview-image" src="" alt="Preview da nova foto" style="max-width: 200px; max-height: 200px; margin: 10px auto;" />
+
+        <div>
+          <button id="confirm-upload" class="btn-confirmar">Confirmar</button>
+          <button id="cancel-upload-2" class="btn-cancelar segundo">Escolher Outra</button>
+        </div>
+      </div>
+    </div>
+    
   </body>
   <script src="../js/painelfunc.js"></script>
 </html>

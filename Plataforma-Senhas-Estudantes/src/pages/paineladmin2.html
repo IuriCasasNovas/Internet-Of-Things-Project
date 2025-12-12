@@ -30,13 +30,62 @@
 
             <section class="relatorio">
                 <h1>Relatório Financeiro</h1>
-                <button class="btn-gerar-relatorio">Gerar Relatório Financeiro</button>
+                <div class="filtros-container">
+                    <div class="filtro-item">
+                        <label for="filtro-mes">Mês:</label>
+                        <select id="filtro-mes" class="filtro-select"></select>
+                    </div>
+                    <div class="filtro-item">
+                        <label for="filtro-ano">Ano:</label>
+                        <select id="filtro-ano" class="filtro-select"></select>
+                    </div>
+                </div>
 
-                <div class="img-box">
-                    <img src="../img/graficoEXEMPLO.png" alt="Grafico EXEMPLAR">
+                <div class="cards-container">
+                    <div class="stat-card">
+                        <h4>Receita Total</h4>
+                        <p id="rel-receita" class="stat-value text-green">0.00 €</p>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h4>Senhas Vendidas</h4>
+                        <p id="rel-qtd" class="stat-value text-blue">0</p>
+                    </div>
                 </div>
             </section>
         </div>
     </header>
+    
+    <!-- Modal: Upload -->
+    <div id="upload-modal" class="modal-overlay" style="display: none;">
+      <div class="modal-content">
+        <button id="cancel-upload-1" class="btn-cancelar primeiro">Voltar</button>
+        <h3>Alterar foto de perfil</h3>
+
+        <div class="image-upload">
+          <label for="file-input">
+            <img src="../img/imgCAM.png" class="camera-icon" />
+          </label>
+          <input type="file" id="file-input" accept="image/*" />
+        </div>
+
+        <p>Escolha uma imagem do seu computador.</p>
+      </div>
+    </div>
+
+    <!-- Modal: Confirm -->
+    <div id="confirm-modal" class="modal-overlay" style="display: none;">
+      <div class="modal-content">
+        <h3>Confirmar nova foto?</h3>
+        <img id="preview-image" src="" alt="Preview da nova foto" style="max-width: 200px; max-height: 200px; margin: 10px auto;" />
+
+        <div>
+          <button id="confirm-upload" class="btn-confirmar">Confirmar</button>
+          <button id="cancel-upload-2" class="btn-cancelar segundo">Escolher Outra</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="../js/relatorio.js"></script>
 </body>
 </html>
